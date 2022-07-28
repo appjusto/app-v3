@@ -1,18 +1,32 @@
 {
-  "name": "app-v3",
-  "version": "1.0.0",
+  "name": "app",
+  "version": "10.1.6",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "prepare-env": "cp .$ENV.env .env",
+    "start": "npm run prepare-env && expo start -c",
+    "publish": "node ./scripts/publish",
+    "build": "node ./scripts/build",
+    "clear-cache": "watchman watch-del-all && rm -rf node_modules/ && rm -f package-lock.json && npm install --legacy-peer-deps",
+    "inc-version": "node ./version-inc",
+    "version": "node ./scripts/version-inc && git add version.json",
+    "postversion": "git push && git push --tags && git fetch"
   },
   "dependencies": {
+    "@appjusto/types": "^7.6.12",
+    "@expo/vector-icons": "^13.0.0",
+    "@reduxjs/toolkit": "^1.8.3",
+    "@types/react": "~18.0.0",
+    "@types/react-native": "~0.69.1",
+    "dotenv": "^16.0.1",
     "expo": "~46.0.1",
+    "expo-notifications": "~0.16.1",
+    "expo-splash-screen": "~0.16.1",
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",
-    "react-native": "0.69.3"
+    "react-native": "0.69.3",
+    "sentry-expo": "~5.0.0",
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
