@@ -1,9 +1,8 @@
-import React from 'react';
 import { loadAssets } from '../assets';
-import { BusinessApp } from '../business/BusinessApp';
+import { AppBusiness } from '../business/AppBusiness';
 import { getFlavor } from '../config';
-import { ConsumerApp } from '../consumer/ConsumerApp';
-import { CourierApp } from '../courier/CourierApp';
+import { AppConsumer } from '../consumer/AppConsumer';
+import { AppCourier } from '../courier/AppCourier';
 import { PreloadAssets } from './PreloadAssets';
 
 export const App = () => {
@@ -12,9 +11,9 @@ export const App = () => {
     <PreloadAssets loadAssets={() => loadAssets(flavor)}>
       {() => (
         <>
-          {flavor === 'consumer' ? <ConsumerApp /> : null}
-          {flavor === 'courier' ? <CourierApp /> : null}
-          {flavor === 'business' ? <BusinessApp /> : null}
+          {flavor === 'consumer' ? <AppConsumer /> : null}
+          {flavor === 'courier' ? <AppCourier /> : null}
+          {flavor === 'business' ? <AppBusiness /> : null}
         </>
       )}
     </PreloadAssets>

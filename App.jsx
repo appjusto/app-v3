@@ -1,6 +1,7 @@
 import { LogBox } from 'react-native';
 import { App } from './v3/common/App';
 
+// eslint-disable-next-line no-undef
 if (__DEV__) {
   LogBox.ignoreLogs([
     'Setting a timer',
@@ -11,4 +12,5 @@ if (__DEV__) {
   ]);
 }
 
-export default () => <App/>;
+// eslint-disable-next-line react/display-name
+export default () => <App />;

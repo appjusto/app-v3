@@ -2,14 +2,14 @@ import { StyleSheet } from 'react-native';
 import { colors } from './colors';
 
 const base = {
-  fontFamily: 'BarlowMedium',
+  fontFamily: 'Barlow_500Medium',
   color: colors.black,
 };
 
 export const texts = StyleSheet.create({
   base: base,
   bold: {
-    fontFamily: 'BarlowBold',
+    fontFamily: 'Barlow_700Bold',
     color: colors.black,
   },
   x2s: {

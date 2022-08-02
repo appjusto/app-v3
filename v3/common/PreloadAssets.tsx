@@ -12,36 +12,34 @@ export interface Props {
 export const PreloadAssets = ({ children, loadAssets }: Props) => {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   React.useEffect(() => {
-    (async () => {
+    void (async () => {
       try {
         await SplashScreen.preventAutoHideAsync();
-      } catch (error: any) {
+        await loadAssets();
+        setAssetsLoaded(true);
+      } catch (error) {
         console.warn(error);
       }
-      await loadAssets();
-      setAssetsLoaded(true);
     })();
-  }, []);
+  }, [loadAssets]);
 
-  const onLayoutRootView = React.useCallback(async () => {
-    if (assetsLoaded) {
-      try {
-        await SplashScreen.hideAsync();
-      } catch (error: any) {
-        console.warn(error);
+  const onLayoutRootView = () => {
+    void (async () => {
+      if (assetsLoaded) {
+        try {
+          await SplashScreen.hideAsync();
+        } catch (error) {
+          console.warn(error);
+        }
       }
-    }
-  }, [assetsLoaded]);
+    })();
+  };
 
   if (!assetsLoaded) return null;
 
   return (
     <View style={screens.default} onLayout={onLayoutRootView}>
-      {assetsLoaded ? (
-        children()
-      ) : (
-        <ActivityIndicator size="small" color={colors.white} />
-      )}
+      {assetsLoaded ? children() : <ActivityIndicator size="small" color={colors.white} />}
     </View>
   );
 };

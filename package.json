@@ -10,28 +10,38 @@
     "clear-cache": "watchman watch-del-all && rm -rf node_modules/ && rm -f package-lock.json && npm install --legacy-peer-deps",
     "inc-version": "node ./version-inc",
     "version": "node ./scripts/version-inc && git add version.json",
-    "postversion": "git push && git push --tags && git fetch"
+    "postversion": "git push && git push --tags && git fetch",
+    "lint": "eslint **/*.ts **/*.tsx"
   },
   "dependencies": {
     "@appjusto/types": "^7.6.12",
+    "@expo-google-fonts/barlow": "^0.2.2",
     "@expo/vector-icons": "^13.0.0",
     "@reduxjs/toolkit": "^1.8.3",
     "@types/react": "~18.0.0",
     "@types/react-native": "~0.69.1",
     "dotenv": "^16.0.1",
     "expo": "~46.0.1",
+    "expo-constants": "~13.2.3",
+    "expo-font": "~10.2.0",
     "expo-notifications": "~0.16.1",
     "expo-splash-screen": "~0.16.1",
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",
     "react-native": "0.69.3",
+    "react-native-svg": "12.3.0",
     "sentry-expo": "~5.0.0",
-    "typescript": "^4.6.3",
-    "expo-constants": "~13.2.3",
-    "react-native-svg": "12.3.0"
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "eslint": "^8.21.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.7.1"
   },
   "private": true
 }

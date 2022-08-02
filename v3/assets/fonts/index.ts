@@ -1,13 +1,11 @@
-import * as Font from 'expo-font';
-
+import { Barlow_500Medium, Barlow_700Bold } from '@expo-google-fonts/barlow';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
-const BarlowBold = require('../../../assets/fonts/Barlow-Bold.ttf');
-const BarlowMedium = require('../../../assets/fonts/Barlow-Medium.ttf');
+import * as Font from 'expo-font';
 
 export const loadFonts = async () => {
   await Font.loadAsync({
-    BarlowMedium,
-    BarlowBold,
+    Barlow_500Medium,
+    Barlow_700Bold,
     ...Feather.font,
     ...MaterialIcons.font,
   });

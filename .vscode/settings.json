@@ -1,19 +1,11 @@
 {
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "prettier.singleQuote": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "[typescript]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
-  "[typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": true
-    }
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "files.exclude": {
     "**/.expo": true,
     "**/.expo-shared": true,

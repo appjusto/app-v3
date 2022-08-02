@@ -106,7 +106,7 @@ const getFallbackDomain = (environment: Environment) =>
 
 // ios
 
-export const infoPlist = (): { [k: string]: any } => {
+export const infoPlist = (): { [k: string]: unknown } => {
   if (flavor === 'business') return { UIBackgroundModes: ['fetch'] };
   if (flavor === 'consumer')
     return {
@@ -183,9 +183,9 @@ const intentFilters = () => {
     intentFilter(getFallbackDomain(environment), `/${flavor}`),
   ];
   if (flavor === 'consumer') {
-    filters.push(intentFilter(getBaseDomain(environment), `/r`));
+    filters.push(intentFilter(getBaseDomain(environment), '/r'));
   } else if (flavor === 'courier') {
-    filters.push(intentFilter(getBaseDomain(environment), `/f`));
+    filters.push(intentFilter(getBaseDomain(environment), '/f'));
   }
   return filters;
 };
@@ -209,7 +209,7 @@ const android = (): Android => ({
   },
 });
 
-const plugins = (): (string | [] | [string] | [string, any])[] => {
+const plugins = (): (string | [] | [string] | [string, unknown])[] => {
   if (flavor === 'courier')
     return [
       [
@@ -238,16 +238,16 @@ const extra = (): Extra => ({
   bundleIdentifier: appBundlePackage(),
   androidPackage: appBundlePackage(),
   firebase: {
-    apiKeyAndroid: FIREBASE_API_KEY_ANDROID!,
-    apiKeyiOS: FIREBASE_API_KEY_IOS!,
-    authDomain: `${FIREBASE_PROJECT_ID}.firebaseapp.com`,
-    region: FIREBASE_REGION!,
-    projectId: FIREBASE_PROJECT_ID!,
+    apiKeyAndroid: FIREBASE_API_KEY_ANDROID as string,
+    apiKeyiOS: FIREBASE_API_KEY_IOS as string,
+    authDomain: `${FIREBASE_PROJECT_ID as string}.firebaseapp.com`,
+    region: FIREBASE_REGION as string,
+    projectId: FIREBASE_PROJECT_ID as string,
     storageBucket:
       process.env.FIREBASE_EMULATOR === 'true'
         ? 'gs://default-bucket'
-        : `${FIREBASE_PROJECT_ID}.appspot.com`,
-    messagingSenderId: FIREBASE_MESSAGING_SENDER_ID!,
+        : `${FIREBASE_PROJECT_ID as string}.appspot.com`,
+    messagingSenderId: FIREBASE_MESSAGING_SENDER_ID as string,
     appId: firebaseAppId(),
     emulator: {
       enabled: process.env.FIREBASE_EMULATOR === 'true',
@@ -255,18 +255,18 @@ const extra = (): Extra => ({
     },
   },
   analytics: {
-    segmentConsumerAndroidKey: SEGMENT_CONSUMER_ANDROID_KEY!,
-    segmentConsumeriOSKey: SEGMENT_CONSUMER_IOS_KEY!,
-    segmentCourierAndroidKey: SEGMENT_COURIER_ANDROID_KEY!,
-    segmentCourieriOSKey: SEGMENT_COURIER_IOS_KEY!,
-    sentryDNS: SENTRY_DSN!,
+    segmentConsumerAndroidKey: SEGMENT_CONSUMER_ANDROID_KEY as string,
+    segmentConsumeriOSKey: SEGMENT_CONSUMER_IOS_KEY as string,
+    segmentCourierAndroidKey: SEGMENT_COURIER_ANDROID_KEY as string,
+    segmentCourieriOSKey: SEGMENT_COURIER_IOS_KEY as string,
+    sentryDNS: SENTRY_DSN as string,
   },
   iugu: {
-    accountId: IUGU_ACCOUNT_ID!,
+    accountId: IUGU_ACCOUNT_ID as string,
   },
   algolia: {
-    appId: ALGOLIA_APPID!,
-    apiKey: ALGOLIA_APIKEY!,
+    appId: ALGOLIA_APPID as string,
+    apiKey: ALGOLIA_APIKEY as string,
   },
 });
 
