@@ -1,5 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useState } from 'react';
+import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { screens } from './styles';
 import { colors } from './styles/colors';
@@ -9,12 +9,15 @@ export interface Props {
   loadAssets: () => Promise<void>;
 }
 
+SplashScreen.preventAutoHideAsync()
+  .then(() => null)
+  .catch((error) => console.warn(error));
+
 export const PreloadAssets = ({ children, loadAssets }: Props) => {
-  const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const [assetsLoaded, setAssetsLoaded] = React.useState(false);
   React.useEffect(() => {
     void (async () => {
       try {
-        await SplashScreen.preventAutoHideAsync();
         await loadAssets();
         setAssetsLoaded(true);
       } catch (error) {

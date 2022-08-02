@@ -1,4 +1,5 @@
 import { Text, View } from 'react-native';
+import { borderRadius2 } from '../../../../common/styles/borders';
 import { colors } from '../../../../common/styles/colors';
 import { texts } from '../../../../common/styles/fonts';
 import { padding4, padding5 } from '../../../../common/styles/padding';
@@ -9,14 +10,14 @@ interface Props {
   text: string;
 }
 
-export const HomeCarouselItem = ({ icon, title, text }: Props) => {
+export const ConsumerHomeCarouselItem = ({ icon, title, text }: Props) => {
   return (
     <View
       style={{
         padding: padding5,
         backgroundColor: colors.grey50,
         width: 280,
-        borderRadius: 24,
+        borderRadius: borderRadius2,
         marginHorizontal: padding4,
       }}
     >

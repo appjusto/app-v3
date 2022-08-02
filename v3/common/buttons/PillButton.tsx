@@ -1,4 +1,5 @@
 import { Pressable, PressableProps, Text, View } from 'react-native';
+import { borderRadius2 } from '../styles/borders';
 import { colors } from '../styles/colors';
 import { padding1, padding3 } from '../styles/padding';
 
@@ -16,7 +17,7 @@ export const PillButton = ({ title, ...props }: Props) => {
             paddingVertical: padding1,
             backgroundColor: colors.yellow,
             opacity: pressed ? 0.8 : 1,
-            borderRadius: 24,
+            borderRadius: borderRadius2,
           }}
         >
           <Text>{title}</Text>
