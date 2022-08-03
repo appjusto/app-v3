@@ -18,6 +18,7 @@ export default class Api {
       Platform.OS === 'android' ? extra.firebase.apiKeyAndroid : extra.firebase.apiKeyiOS;
     const app = initializeApp({ ...extra.firebase, apiKey });
     this.authentication = getAuth(app);
+    this.authentication.languageCode = 'pt';
     this.firestore = getFirestore(app);
     this.functions = getFunctions(app, extra.firebase.region);
     this.storage = getStorage(app);

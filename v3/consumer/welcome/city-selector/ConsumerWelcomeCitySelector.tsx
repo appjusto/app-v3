@@ -1,4 +1,6 @@
-import { Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useAssets } from 'expo-asset';
+import { ImageBackground, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RectButton } from '../../../common/buttons/RectButton';
 import { borderRadius2 } from '../../../common/styles/borders';
@@ -9,17 +11,24 @@ import { useConsumerAppDispatch } from '../../store';
 import { updateLocation } from '../../store/actions';
 import { getConsumerLocation } from '../../store/selectors';
 
-export const ConsumerHomeCitySelector = () => {
+export const ConsumerWelcomeCitySelector = () => {
+  // context
+  const navigation = useNavigation();
+  // redux
   const location = useSelector(getConsumerLocation);
   const dispatch = useConsumerAppDispatch();
+  // assets
+  const [assets] = useAssets([require('./assets/background.jpg')]);
   if (location) return null;
+  if (!assets) return null;
+  const [background] = assets;
   return (
-    <View
+    <ImageBackground
+      source={{ uri: background.uri }}
       style={{
         flex: 1,
         justifyContent: 'center',
         padding: padding4,
-        backgroundColor: colors.yellow,
       }}
     >
       <View
@@ -48,13 +57,15 @@ export const ConsumerHomeCitySelector = () => {
           style={{ marginTop: padding2 }}
           variant="secondary"
           title="Estou em outra cidade"
+          onPress={() => navigation.navigate('HomeNavigator')}
         />
         <RectButton
           style={{ marginTop: padding2 }}
           variant="transparent"
           title="Acessar como visitante"
+          onPress={() => navigation.navigate('LoginNavigator')}
         />
       </View>
-    </View>
+    </ImageBackground>
   );
 };

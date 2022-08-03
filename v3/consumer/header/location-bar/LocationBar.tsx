@@ -1,10 +1,10 @@
 import { Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { IconGPS } from '../../../../../assets/consumer/svg/IconGPS';
-import { PillButton } from '../../../../common/buttons/PillButton';
-import { texts } from '../../../../common/styles/fonts';
-import { padding2 } from '../../../../common/styles/padding';
-import { getConsumerLocation } from '../../../store/selectors';
+import { PillButton } from '../../../common/buttons/PillButton';
+import { texts } from '../../../common/styles/fonts';
+import { padding2 } from '../../../common/styles/padding';
+import { getConsumerLocation } from '../../store/selectors';
+import { IconGPS } from './assets/IconGPS';
 
 export const LocationBar = () => {
   const location = useSelector(getConsumerLocation);

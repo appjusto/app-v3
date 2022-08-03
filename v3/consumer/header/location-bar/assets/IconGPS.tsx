@@ -1,7 +1,7 @@
 import Svg, { Path, SvgProps } from 'react-native-svg';
 
 export const IconGPS = (props: SvgProps) => (
-  <Svg width={16} height={16} fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <Svg width={16} height={16} fill="none" {...props}>
     <Path
       fillRule="evenodd"
       clipRule="evenodd"

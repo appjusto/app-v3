@@ -1,8 +1,8 @@
 import { Text, View } from 'react-native';
-import { borderRadius2 } from '../../../../common/styles/borders';
-import { colors } from '../../../../common/styles/colors';
-import { texts } from '../../../../common/styles/fonts';
-import { padding4, padding5 } from '../../../../common/styles/padding';
+import { borderRadius2 } from '../../../common/styles/borders';
+import { colors } from '../../../common/styles/colors';
+import { texts } from '../../../common/styles/fonts';
+import { padding4, padding5 } from '../../../common/styles/padding';
 
 interface Props {
   icon: string;
@@ -10,7 +10,7 @@ interface Props {
   text: string;
 }
 
-export const ConsumerHomeCarouselItem = ({ icon, title, text }: Props) => {
+export const ConsumerCarouselItem = ({ icon, title, text }: Props) => {
   return (
     <View
       style={{

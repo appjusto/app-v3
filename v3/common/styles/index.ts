@@ -6,7 +6,6 @@ export const screens = StyleSheet.create({
   default: {
     flex: 1,
     backgroundColor: colors.white,
-    // marginTop: Constants.statusBarHeight,
-    marginTop: padding4,
+    paddingTop: padding4,
   },
 });

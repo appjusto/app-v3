@@ -1,28 +1,28 @@
 import { ScrollView, View } from 'react-native';
-import { ConsumerHomeCarouselItem } from './ConsumerHomeCarouselItem';
+import { ConsumerCarouselItem } from './ConsumerCarouselItem';
 
-export const ConsumerHomeCarousel = () => {
+export const ConsumerCarousel = () => {
   return (
     <View style={{ flexDirection: 'row' }}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <ConsumerHomeCarouselItem
+        <ConsumerCarouselItem
           icon={'🛵'}
           title={'Entregadores ganham mais'}
           text={'Entregadores definem suas próprias condições, e o aplicativo não fica com nada'}
         />
-        <ConsumerHomeCarouselItem
+        <ConsumerCarouselItem
           icon={'🍕'}
           title={'Restaurantes ganham mais'}
           text={
             'Nossa comissão é de 5%, enquanto em outros apps esse valor pode chegar a quase 30%'
           }
         />
-        <ConsumerHomeCarouselItem
+        <ConsumerCarouselItem
           icon={'🎉'}
           title={'Pratos mais baratos'}
           text={'Como restaurantes pagam menos, agora eles podem ofertar pratos com preços menores'}
         />
-        <ConsumerHomeCarouselItem
+        <ConsumerCarouselItem
           icon={'📦'}
           title={'Entrega de encomendas'}
           text={
