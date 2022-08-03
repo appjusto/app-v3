@@ -16,6 +16,10 @@ export const texts = StyleSheet.create({
     ...base,
     fontSize: 11,
   },
+  ss: {
+    ...base,
+    fontSize: 12,
+  },
   xs: {
     ...base,
     fontSize: 13,
