@@ -5,7 +5,7 @@ const initialState: ConsumerState = {
   location: undefined,
 };
 
-export const consumerSlice = createSlice({
+export const profileSlice = createSlice({
   name: 'consumer',
   initialState,
   reducers: {
@@ -16,4 +16,4 @@ export const consumerSlice = createSlice({
   },
 });
 
-export default consumerSlice.reducer;
+export default profileSlice.reducer;

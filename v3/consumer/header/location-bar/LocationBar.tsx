@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { PillButton } from '../../../common/buttons/PillButton';
 import { texts } from '../../../common/styles/fonts';
 import { padding2 } from '../../../common/styles/padding';
-import { getConsumerLocation } from '../../store/selectors';
+import { getConsumerLocation } from '../../store/profile/selectors';
 import { IconGPS } from './assets/IconGPS';
 
 export const LocationBar = () => {

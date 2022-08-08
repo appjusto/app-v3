@@ -1,7 +1,7 @@
 import React from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { AuthMode } from '../../api/auth/AuthApi';
-import { useAuthApi } from '../../api/context/ApiContext';
+import { useApi } from '../../api/context/ApiContext';
 import { AppJustoLogo } from '../../assets/AppJustoLogo';
 import { CheckButton } from '../buttons/CheckButton';
 import { PillButton } from '../buttons/PillButton';
@@ -18,7 +18,7 @@ import { useLogin } from './useLogin';
 
 export const LoginScreen = () => {
   // context
-  const auth = useAuthApi();
+  const auth = useApi().getAuth();
   // state
   const [position, setPosition] = React.useState<SwitchPosition>('left');
   const action = position === 'left' ? 'login' : 'create-account';
@@ -32,9 +32,7 @@ export const LoginScreen = () => {
   // handlers
   const submitHandler = () => {
     if (action === 'login') {
-      void (async () => {
-        await login();
-      })();
+      login();
     }
   };
   // UI

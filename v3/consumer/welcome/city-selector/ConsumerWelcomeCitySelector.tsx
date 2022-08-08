@@ -8,8 +8,8 @@ import { colors } from '../../../common/styles/colors';
 import { texts } from '../../../common/styles/fonts';
 import { padding2, padding4, padding6 } from '../../../common/styles/padding';
 import { useConsumerAppDispatch } from '../../store';
-import { updateLocation } from '../../store/actions';
-import { getConsumerLocation } from '../../store/selectors';
+import { updateLocation } from '../../store/profile/actions';
+import { getConsumerLocation } from '../../store/profile/selectors';
 
 export const ConsumerWelcomeCitySelector = () => {
   // context

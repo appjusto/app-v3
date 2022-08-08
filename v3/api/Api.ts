@@ -5,12 +5,15 @@ import { connectFunctionsEmulator, Functions, getFunctions } from 'firebase/func
 import { connectStorageEmulator, FirebaseStorage, getStorage } from 'firebase/storage';
 import { Platform } from 'react-native';
 import { Extra } from '../config/types';
+import AuthApi from './auth/AuthApi';
 
 export default class Api {
   private authentication: Auth;
   private firestore: Firestore;
   private functions: Functions;
   private storage: FirebaseStorage;
+
+  private auth: AuthApi;
 
   constructor(extra: Extra) {
     const emulated = extra.firebase.emulator.enabled && extra.firebase.emulator.host;
@@ -29,5 +32,11 @@ export default class Api {
       connectFunctionsEmulator(this.functions, host, 5001);
       connectStorageEmulator(this.storage, host, 9199);
     }
+
+    this.auth = new AuthApi();
+  }
+
+  getAuth() {
+    return this.auth;
   }
 }

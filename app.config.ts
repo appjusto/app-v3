@@ -28,29 +28,6 @@ const {
   SENTRY_AUTH_TOKEN,
 } = process.env;
 
-console.log({
-  FLAVOR,
-  ENVIRONMENT,
-  FIREBASE_API_KEY_ANDROID,
-  FIREBASE_API_KEY_IOS,
-  FIREBASE_REGION,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_CONSUMER_APP_ID,
-  FIREBASE_COURIER_APP_ID,
-  FIREBASE_BUSINESS_APP_ID,
-  FIREBASE_EMULATOR_HOST,
-  SEGMENT_CONSUMER_IOS_KEY,
-  SEGMENT_CONSUMER_ANDROID_KEY,
-  SEGMENT_COURIER_IOS_KEY,
-  SEGMENT_COURIER_ANDROID_KEY,
-  SENTRY_DSN,
-  IUGU_ACCOUNT_ID,
-  ALGOLIA_APPID,
-  ALGOLIA_APIKEY,
-  SENTRY_AUTH_TOKEN,
-});
-
 const flavor: Flavor = FLAVOR as Flavor;
 const environment: Environment = ENVIRONMENT as Environment;
 
@@ -284,7 +261,6 @@ const hooks = () => ({
 });
 
 export default ({ config }: ConfigContext): ExpoConfig => {
-  console.log(config);
   return {
     ...config,
     privacy: 'hidden',

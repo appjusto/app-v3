@@ -1,7 +1,9 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import { AuthMode } from '../../api/auth/AuthApi';
-import { useAuthApi } from '../../api/context/ApiContext';
+import { useApi } from '../../api/context/ApiContext';
+import { useConsumerAppDispatch } from '../../consumer/store';
+import { loginWithEmail } from '../../consumer/store/user/reducer';
 import { validateEmail } from '../../core/validators';
 
 export const useLogin = (
@@ -12,7 +14,9 @@ export const useLogin = (
   acceptedTerms: boolean
 ) => {
   // context
-  const auth = useAuthApi();
+  const auth = useApi().getAuth();
+  // redux
+  const dispatch = useConsumerAppDispatch();
   // state
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<unknown>();
@@ -28,15 +32,15 @@ export const useLogin = (
     return false;
   })();
   // handlers
-  const login = React.useCallback(async () => {
+  const login = React.useCallback(() => {
     try {
       if (disabled) return;
       setLoading(true);
       setError(undefined);
       if (authMode === 'passwordless') {
-        await auth.sendSignInLinkToEmail(email.trim().toLowerCase());
+        dispatch(loginWithEmail(email.trim().toLowerCase()));
       } else if (authMode === 'password') {
-        await auth.signInWithEmailAndPassword(email.trim().toLowerCase(), password);
+        // await auth.signInWithEmailAndPassword(email.trim().toLowerCase(), password);
       } else if (authMode === 'phone') {
         // await auth.phone(email, password);
       }
@@ -45,7 +49,7 @@ export const useLogin = (
       setLoading(false);
       setError(error);
     }
-  }, [auth, authMode, disabled, email, password]);
+  }, [authMode, disabled, dispatch, email]);
   // result
   return { disabled, loading, error, login };
 };
