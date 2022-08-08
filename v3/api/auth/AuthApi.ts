@@ -27,9 +27,15 @@ export type AuthMode = 'passwordless' | 'password' | 'phone';
 
 export default class AuthApi {
   private auth: Auth;
+
   constructor() {
     this.auth = getAuth();
   }
+
+  getDefaultAuthMode() {
+    return getManifestExtra().flavor === 'courier' ? 'phone' : 'passwordless';
+  }
+
   observeAuthState(handler: (a: User | null) => unknown): Unsubscribe {
     return onAuthStateChanged(this.auth, handler);
   }
@@ -44,6 +50,7 @@ export default class AuthApi {
         signInAt: serverTimestamp(),
       });
     } catch (error) {
+      console.warn(error);
       // Sentry.Native.captureException(error);
     }
     const url = `https://${getFallbackDomain(environment)}/${flavor}/join`;

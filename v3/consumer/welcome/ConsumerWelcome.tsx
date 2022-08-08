@@ -3,7 +3,7 @@ import { screens } from '../../common/styles';
 import { ConsumerHeader } from '../header/ConsumerHeader';
 import { ConsumerWelcomeCitySelector } from './city-selector/ConsumerWelcomeCitySelector';
 
-export const ConsumerWelcome = () => {
+export const ConsumerWelcomeScreen = () => {
   return (
     <View style={{ ...screens.default }}>
       <ConsumerHeader />

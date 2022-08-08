@@ -1,13 +1,13 @@
 import { Canvas, RoundedRect, SkiaView, useSpring } from '@shopify/react-native-skia';
 import React from 'react';
-import { LayoutRectangle, Pressable, Text, View } from 'react-native';
+import { LayoutRectangle, Pressable, Text, View, ViewProps } from 'react-native';
 import { colors } from '../styles/colors';
 import { texts } from '../styles/fonts';
 import { padding1, padding2, padding6 } from '../styles/padding';
 
 export type SwitchPosition = 'left' | 'right';
 
-interface Props {
+interface Props extends ViewProps {
   leftIcon: string;
   leftText: string;
   rightIcon: string;
@@ -22,7 +22,9 @@ export const SwitchButton = ({
   rightIcon,
   rightText,
   position,
+  style,
   onToggle,
+  ...props
 }: Props) => {
   // state
   const [layout, setLayout] = React.useState<LayoutRectangle>();
@@ -32,7 +34,11 @@ export const SwitchButton = ({
     position === 'left' ? padding : layout?.width ? layout.width * 0.5 + padding : 0
   );
   return (
-    <View style={{ height: 54 }} onLayout={(event) => setLayout(event.nativeEvent.layout)}>
+    <View
+      style={[{ height: 54 }, style]}
+      {...props}
+      onLayout={(event) => setLayout(event.nativeEvent.layout)}
+    >
       {layout ? (
         <Pressable
           onPress={() => {

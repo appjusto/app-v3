@@ -6,14 +6,14 @@ import { colors } from '../styles/colors';
 import { texts } from '../styles/fonts';
 import { padding1, padding3 } from '../styles/padding';
 
-export interface DefaultInputProps extends TextInputProps {
+export interface LabeledInputProps extends TextInputProps {
   title?: string;
   children?: React.ReactNode;
   errorMessage?: string;
 }
 
-export default React.forwardRef(function DefaultInput(
-  { title, children, editable = true, style, errorMessage, ...props }: DefaultInputProps,
+export const LabeledInput = React.forwardRef(function LabeledInput(
+  { title, children, editable = true, style, errorMessage, ...props }: LabeledInputProps,
   externalRef
 ) {
   // refs
