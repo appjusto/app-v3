@@ -1,14 +1,13 @@
 import { Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useUser } from '../../common/context/UserContext';
 import { texts } from '../../common/styles/fonts';
 import { padding4 } from '../../common/styles/padding';
-import { getUser } from '../store/user/selectors';
 import { ConsumerCarousel } from './carousel/ConsumerCarousel';
 import { LocationBar } from './location-bar/LocationBar';
 
 export const ConsumerHeader = () => {
-  // redux
-  const user = useSelector(getUser);
+  // context
+  const user = useUser();
   // UI
   return (
     <View style={{ flex: 1, padding: padding4 }}>

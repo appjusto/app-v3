@@ -1,22 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import { useAssets } from 'expo-asset';
 import { ImageBackground, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
 import { RectButton } from '../../../common/buttons/RectButton';
 import { borderRadius2 } from '../../../common/styles/borders';
 import { colors } from '../../../common/styles/colors';
 import { texts } from '../../../common/styles/fonts';
 import { padding2, padding4, padding6 } from '../../../common/styles/padding';
-import { useConsumerAppDispatch } from '../../store';
-import { updateLocation } from '../../store/profile/actions';
-import { getConsumerLocation } from '../../store/profile/selectors';
+import { useLocation, useUpdateLocation } from '../../context/ConsumerContext';
 
 export const ConsumerWelcomeCitySelector = () => {
   // context
   const navigation = useNavigation();
   // redux
-  const location = useSelector(getConsumerLocation);
-  const dispatch = useConsumerAppDispatch();
+  const location = useLocation();
+  const updateLocation = useUpdateLocation();
   // assets
   const [assets] = useAssets([require('./assets/background.jpg')]);
   if (location) return null;
@@ -42,15 +39,13 @@ export const ConsumerWelcomeCitySelector = () => {
           style={{ marginTop: padding4 }}
           title="Estou em São Paulo"
           onPress={() => {
-            dispatch(
-              updateLocation({
-                title: 'Avenida Paulista, 1578',
-                coordinates: {
-                  latitude: -23.561433653472772,
-                  longitude: -46.65590336017428,
-                },
-              })
-            );
+            updateLocation({
+              title: 'Avenida Paulista, 1578',
+              coordinates: {
+                latitude: -23.561433653472772,
+                longitude: -46.65590336017428,
+              },
+            });
           }}
         />
         <RectButton

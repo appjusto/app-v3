@@ -1,12 +1,12 @@
 import React from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
 import { AuthMode } from '../../api/auth/AuthApi';
-import { useApi } from '../../api/context/ApiContext';
 import { AppJustoLogo } from '../../assets/AppJustoLogo';
 import { CheckButton } from '../buttons/CheckButton';
 import { PillButton } from '../buttons/PillButton';
 import { RectButton } from '../buttons/RectButton';
 import { SwitchButton, SwitchPosition } from '../buttons/SwitchButton';
+import { useApi } from '../context/ApiContext';
 import { LabeledInput } from '../inputs/LabeledInput';
 import { phoneFormatter, phoneMask } from '../inputs/pattern-input/formatters';
 import { numbersOnlyParser } from '../inputs/pattern-input/parsers';

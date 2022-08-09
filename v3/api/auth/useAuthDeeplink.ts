@@ -1,11 +1,9 @@
 import { useURL } from 'expo-linking';
 import { User } from 'firebase/auth';
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useConsumerAppDispatch } from '../../consumer/store';
-import { loginWithDeeplink, updateUser } from '../../consumer/store/user/reducer';
-import { getEmail, getUser } from '../../consumer/store/user/selectors';
-import { useApi } from '../context/ApiContext';
+import { useApi } from '../../common/context/ApiContext';
+import { useUser } from '../../common/context/UserContext';
+import { api } from '../Api';
 
 export enum AuthState {
   CheckingPreviousSession = 'checking-previous-sesssion',
@@ -26,18 +24,12 @@ const extractAuthLink = (link: string) => {
 export const useAuthDeeplink = (): [AuthState, User | undefined | null] => {
   // context
   const auth = useApi().getAuth();
-  // redux
-  const dispatch = useConsumerAppDispatch();
-  const email = useSelector(getEmail);
-  const user = useSelector(getUser);
+  const user = useUser();
   // state
   const deeplink = useURL();
   const [authState, setAuthState] = React.useState<AuthState>(AuthState.CheckingPreviousSession);
   // side effects
   // subscribe once to be notified whenever the user changes (capture by the next effect)
-  React.useEffect(() => {
-    return auth.observeAuthState((user) => dispatch(updateUser(user)));
-  }, [auth, dispatch]);
 
   // whenever auth changes
   React.useEffect(() => {
@@ -79,12 +71,12 @@ export const useAuthDeeplink = (): [AuthState, User | undefined | null] => {
       return;
     }
     setAuthState(AuthState.SigningIn);
-    if (!email) {
-      setAuthState(AuthState.InvalidCredentials);
-      return;
-    }
-    dispatch(loginWithDeeplink(link));
-  }, [auth, authState, deeplink, dispatch, email]);
+    api
+      .getAuth()
+      .signInWithEmailLink(link)
+      .then(() => null)
+      .catch(() => null);
+  }, [auth, authState, deeplink]);
 
   return [authState, user];
 };

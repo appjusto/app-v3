@@ -2,7 +2,7 @@ import { Environment, Flavor } from '@appjusto/types';
 import { ConfigContext, ExpoConfig } from '@expo/config';
 import { Android, IOS, Splash } from '@expo/config-types';
 import 'dotenv/config';
-import { Extra } from './v3/config/types';
+import { Extra } from './v3/common/config/types';
 import { version, versionCode } from './version.json';
 
 const {

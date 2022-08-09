@@ -1,10 +1,8 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import { AuthMode } from '../../api/auth/AuthApi';
-import { useApi } from '../../api/context/ApiContext';
-import { useConsumerAppDispatch } from '../../consumer/store';
-import { loginWithEmail } from '../../consumer/store/user/reducer';
-import { validateEmail } from '../../core/validators';
+import { useApi } from '../context/ApiContext';
+import { validateEmail } from '../core/validators';
 
 export const useLogin = (
   authMode: AuthMode,
@@ -13,10 +11,8 @@ export const useLogin = (
   phone: string,
   acceptedTerms: boolean
 ) => {
-  // context
-  const auth = useApi().getAuth();
-  // redux
-  const dispatch = useConsumerAppDispatch();
+  // conext
+  const api = useApi();
   // state
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<unknown>();
@@ -34,22 +30,24 @@ export const useLogin = (
   // handlers
   const login = React.useCallback(() => {
     try {
-      if (disabled) return;
-      setLoading(true);
-      setError(undefined);
-      if (authMode === 'passwordless') {
-        dispatch(loginWithEmail(email.trim().toLowerCase()));
-      } else if (authMode === 'password') {
-        // await auth.signInWithEmailAndPassword(email.trim().toLowerCase(), password);
-      } else if (authMode === 'phone') {
-        // await auth.phone(email, password);
-      }
-      setLoading(false);
-    } catch (error: unknown) {
-      setLoading(false);
+      void (async () => {
+        if (disabled) return;
+        setError(undefined);
+        setLoading(true);
+        if (authMode === 'passwordless') {
+          await api.getAuth().sendSignInLinkToEmail(email.trim().toLowerCase());
+        } else if (authMode === 'password') {
+          await api.getAuth().signInWithEmailAndPassword(email.trim().toLowerCase(), password);
+        } else if (authMode === 'phone') {
+          // await auth.phone(email, password);
+        }
+        setLoading(false);
+      })();
+    } catch (error) {
       setError(error);
+      setLoading(false);
     }
-  }, [authMode, disabled, dispatch, email]);
+  }, [api, authMode, disabled, email, password]);
   // result
   return { disabled, loading, error, login };
 };

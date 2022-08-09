@@ -1,20 +1,19 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { Provider } from 'react-redux';
-import { AuthContainer } from '../api/auth/context/AuthContainer';
-import { ApiContextProvider } from '../api/context/ApiContext';
+import { ApiContextProvider } from '../common/context/ApiContext';
+import { UserContextProvider } from '../common/context/UserContext';
 import { ConsumerMainNavigator } from './ConsumerMainNavigator';
-import { store } from './store';
+import { ConsumerContextProvider } from './context/ConsumerContext';
 
 export const ConsumerApp = () => {
   return (
-    <Provider store={store}>
-      <ApiContextProvider>
-        <AuthContainer>
+    <ApiContextProvider>
+      <UserContextProvider>
+        <ConsumerContextProvider>
           <NavigationContainer>
             <ConsumerMainNavigator />
           </NavigationContainer>
-        </AuthContainer>
-      </ApiContextProvider>
-    </Provider>
+        </ConsumerContextProvider>
+      </UserContextProvider>
+    </ApiContextProvider>
   );
 };

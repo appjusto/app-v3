@@ -1,11 +1,11 @@
 import { Bank, PlatformAccess, PlatformParams } from '@appjusto/types';
 import { getDoc, getDocs, orderBy, query } from 'firebase/firestore';
-import { documentsAs } from '../../core';
+import { documentsAs } from '../../common/core';
 import {
   getBanksCollection,
   getPlatformAccessDoc,
   getPlatformParamsDoc,
-} from '../../core/refs/firestore';
+} from '../../common/core/refs/firestore';
 
 export default class PlatformApi {
   async fetchPlatformParams() {

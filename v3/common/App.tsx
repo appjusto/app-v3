@@ -1,8 +1,8 @@
 import { loadAssets } from '../assets';
 import { BusinessApp } from '../business/BusinessApp';
-import { getFlavor } from '../config';
 import { ConsumerApp } from '../consumer/ConsumerApp';
 import { CourierApp } from '../courier/CourierApp';
+import { getFlavor } from './config';
 import { PreloadAssets } from './PreloadAssets';
 
 export const App = () => {

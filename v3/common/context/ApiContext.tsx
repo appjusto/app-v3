@@ -1,8 +1,7 @@
 import React from 'react';
-import { api } from '../../consumer/store';
-import Api from '../Api';
+import Api, { api } from '../../api/Api';
 
-const ApiContext = React.createContext<Api | undefined>(undefined);
+const ApiContext = React.createContext<Api>(api);
 
 interface Props {
   api: Api;
@@ -14,7 +13,7 @@ export const ApiContextProvider = (props: Props) => {
 };
 
 export const useApi = () => {
-  const context = React.useContext(ApiContext);
-  if (!context) throw new Error('Api fora de contexto.');
-  return context;
+  const value = React.useContext(ApiContext);
+  if (!value) throw new Error('Api fora de contexto.');
+  return value;
 };

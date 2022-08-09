@@ -17,16 +17,17 @@ import {
   User,
 } from 'firebase/auth';
 import { addDoc, serverTimestamp } from 'firebase/firestore';
-import { getFlavor, getManifestExtra } from '../../config';
-import { getDeeplinkDomain, getFallbackDomain } from '../../config/domains';
-import { getAppVersion } from '../../config/version';
-import { getLoginsCollection } from '../../core/refs/firestore';
-import { getDeleteAccountCallable } from '../../core/refs/functions';
+import { getFlavor, getManifestExtra } from '../../common/config';
+import { getDeeplinkDomain, getFallbackDomain } from '../../common/config/domains';
+import { getAppVersion } from '../../common/config/version';
+import { getLoginsCollection } from '../../common/core/refs/firestore';
+import { getDeleteAccountCallable } from '../../common/core/refs/functions';
 
 export type AuthMode = 'passwordless' | 'password' | 'phone';
 
 export default class AuthApi {
   private auth: Auth;
+  private email: string | null = null;
 
   constructor() {
     this.auth = getAuth();
@@ -42,6 +43,7 @@ export default class AuthApi {
 
   // login with deeplink
   async sendSignInLinkToEmail(email: string): Promise<void> {
+    this.email = email;
     const { flavor, environment, bundleIdentifier, androidPackage } = getManifestExtra();
     try {
       await addDoc(getLoginsCollection(), {
@@ -68,8 +70,9 @@ export default class AuthApi {
     });
   }
 
-  async signInWithEmailLink(email: string, link: string) {
-    const userCredential = await signInWithEmailLink(this.auth, email, link);
+  async signInWithEmailLink(link: string) {
+    if (!this.email) throw new Error('E-mail inválido');
+    const userCredential = await signInWithEmailLink(this.auth, this.email, link);
     return userCredential.user;
   }
 

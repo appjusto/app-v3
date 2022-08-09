@@ -4,8 +4,10 @@ import { connectFirestoreEmulator, Firestore, getFirestore } from 'firebase/fire
 import { connectFunctionsEmulator, Functions, getFunctions } from 'firebase/functions';
 import { connectStorageEmulator, FirebaseStorage, getStorage } from 'firebase/storage';
 import { Platform } from 'react-native';
-import { Extra } from '../config/types';
+import { getManifestExtra } from '../common/config';
+import { Extra } from '../common/config/types';
 import AuthApi from './auth/AuthApi';
+import ProfileApi from './profile/ProfileApi';
 
 export default class Api {
   private authentication: Auth;
@@ -14,6 +16,7 @@ export default class Api {
   private storage: FirebaseStorage;
 
   private auth: AuthApi;
+  private profile: ProfileApi;
 
   constructor(extra: Extra) {
     const emulated = extra.firebase.emulator.enabled && extra.firebase.emulator.host;
@@ -34,9 +37,16 @@ export default class Api {
     }
 
     this.auth = new AuthApi();
+    this.profile = new ProfileApi(this.auth);
   }
 
   getAuth() {
     return this.auth;
   }
+
+  getProfile() {
+    return this.profile;
+  }
 }
+
+export const api = new Api(getManifestExtra());
