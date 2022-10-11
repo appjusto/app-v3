@@ -18,7 +18,7 @@ export const UserContextProvider = (props: Props) => {
   // side effects
   useAuthDeeplink();
   React.useEffect(() => {
-    api.getAuth().observeAuthState(setUser);
+    return api.getAuth().observeAuthState(setUser);
   }, [api]);
   // result
   return <UserContext.Provider value={user}>{props.children}</UserContext.Provider>;
