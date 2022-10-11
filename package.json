@@ -4,7 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "prepare-env": "cp .$ENV.env .env",
-    "start": "npm run prepare-env && expo start -c",
+    "start": "npm run prepare-env && npx expo start -c",
     "publish": "node ./scripts/publish",
     "build": "node ./scripts/build",
     "clear-cache": "watchman watch-del-all && rm -rf node_modules/ && rm -f package-lock.json && npm install --legacy-peer-deps",
@@ -20,7 +20,7 @@
     "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/native-stack": "^6.7.0",
-    "@shopify/react-native-skia": "0.1.137",
+    "@shopify/react-native-skia": "0.1.141",
     "@types/react": "~18.0.0",
     "@types/react-native": "~0.69.1",
     "axios": "^0.27.2",
