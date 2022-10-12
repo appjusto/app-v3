@@ -1,9 +1,9 @@
 import { useURL } from 'expo-linking';
 import { User } from 'firebase/auth';
 import React from 'react';
-import { useApi } from '../../common/context/ApiContext';
-import { useUser } from '../../common/context/UserContext';
 import { api } from '../Api';
+import { useContextApi } from '../ApiContext';
+import { useUser } from './useUser';
 
 export enum AuthState {
   CheckingPreviousSession = 'checking-previous-sesssion',
@@ -23,7 +23,7 @@ const extractAuthLink = (link: string) => {
 
 export const useAuthDeeplink = (): [AuthState, User | undefined | null] => {
   // context
-  const auth = useApi().getAuth();
+  const auth = useContextApi().getAuth();
   const user = useUser();
   // state
   const deeplink = useURL();

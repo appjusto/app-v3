@@ -1,6 +1,6 @@
 import { Bank } from '@appjusto/types';
 import React from 'react';
-import { usePlatformApi } from '../../common/context/ApiContext';
+import { usePlatformApi } from '../ApiContext';
 
 export const usePlatformParams = () => {
   // context

@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import React from 'react';
-import { useAuthDeeplink } from '../../api/auth/useAuthDeeplink';
-import { useApi } from './ApiContext';
+import { useAuthDeeplink } from './useAuthDeeplink';
+import { useUser } from './useUser';
 
 const UserContext = React.createContext<User | null | undefined>(undefined);
 
@@ -10,20 +10,15 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const UserContextProvider = (props: Props) => {
-  // context
-  const api = useApi();
+export const AuthContextProvider = (props: Props) => {
   // state
-  const [user, setUser] = React.useState<User | null>();
+  const user = useUser();
   // side effects
   useAuthDeeplink();
-  React.useEffect(() => {
-    return api.getAuth().observeAuthState(setUser);
-  }, [api]);
   // result
   return <UserContext.Provider value={user}>{props.children}</UserContext.Provider>;
 };
 
-export const useUser = () => {
+export const useContextUser = () => {
   return React.useContext(UserContext);
 };

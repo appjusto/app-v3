@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
+import { useContextApi } from '../../api/ApiContext';
 import { AuthMode } from '../../api/auth/AuthApi';
-import { useApi } from '../context/ApiContext';
 import { validateEmail } from '../core/validators';
 
 export const useLogin = (
@@ -12,7 +12,7 @@ export const useLogin = (
   acceptedTerms: boolean
 ) => {
   // conext
-  const api = useApi();
+  const api = useContextApi();
   // state
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<unknown>();

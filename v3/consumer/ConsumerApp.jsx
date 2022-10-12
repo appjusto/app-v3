@@ -1,19 +1,19 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { ApiContextProvider } from '../common/context/ApiContext';
-import { UserContextProvider } from '../common/context/UserContext';
+import { ApiContextProvider } from '../api/ApiContext';
+import { AuthContextProvider } from '../api/auth/AuthContext';
 import { ConsumerMainNavigator } from './ConsumerMainNavigator';
 import { ConsumerContextProvider } from './context/ConsumerContext';
 
 export const ConsumerApp = () => {
   return (
     <ApiContextProvider>
-      <UserContextProvider>
+      <AuthContextProvider>
         <ConsumerContextProvider>
           <NavigationContainer>
             <ConsumerMainNavigator />
           </NavigationContainer>
         </ConsumerContextProvider>
-      </UserContextProvider>
+      </AuthContextProvider>
     </ApiContextProvider>
   );
 };

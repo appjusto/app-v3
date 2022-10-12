@@ -1,8 +1,8 @@
 import { ConsumerProfile, WithId } from '@appjusto/types';
 import React from 'react';
+import { useContextApi } from '../../api/ApiContext';
+import { useContextUser } from '../../api/auth/AuthContext';
 import { useAuthDeeplink } from '../../api/auth/useAuthDeeplink';
-import { useApi } from '../../common/context/ApiContext';
-import { useUser } from '../../common/context/UserContext';
 import { ConsumerContextState, ConsumerLocation } from './types';
 
 const ConsumerContext = React.createContext<ConsumerContextState | undefined>(undefined);
@@ -13,8 +13,8 @@ interface Props extends ConsumerContextState {
 
 export const ConsumerContextProvider = (props: Props) => {
   // context
-  const api = useApi();
-  const user = useUser();
+  const api = useContextApi();
+  const user = useContextUser();
   // state
   const [consumer, setConsumer] = React.useState<WithId<ConsumerProfile>>();
   const [location, updateLocation] = React.useState<ConsumerLocation>();
@@ -22,7 +22,7 @@ export const ConsumerContextProvider = (props: Props) => {
   useAuthDeeplink();
   React.useEffect(() => {
     if (!user?.uid) return;
-    api.getProfile().observeProfile<ConsumerProfile>(user.uid, setConsumer);
+    return api.getProfile().observeProfile<ConsumerProfile>(user.uid, setConsumer);
   }, [api, user?.uid]);
   // result
   return (
@@ -32,7 +32,7 @@ export const ConsumerContextProvider = (props: Props) => {
   );
 };
 
-export const useConsumer = () => {
+export const useContextConsumer = () => {
   const context = React.useContext(ConsumerContext);
   if (!context) throw new Error('Fora de contexto.');
   return context.consumer;

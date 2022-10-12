@@ -1,12 +1,12 @@
 import React from 'react';
 import { Keyboard, Pressable, Text, View } from 'react-native';
+import { useContextApi } from '../../api/ApiContext';
 import { AuthMode } from '../../api/auth/AuthApi';
 import { AppJustoLogo } from '../../assets/AppJustoLogo';
 import { CheckButton } from '../buttons/CheckButton';
 import { PillButton } from '../buttons/PillButton';
 import { RectButton } from '../buttons/RectButton';
 import { SwitchButton, SwitchPosition } from '../buttons/SwitchButton';
-import { useApi } from '../context/ApiContext';
 import { LabeledInput } from '../inputs/LabeledInput';
 import { phoneFormatter, phoneMask } from '../inputs/pattern-input/formatters';
 import { numbersOnlyParser } from '../inputs/pattern-input/parsers';
@@ -18,7 +18,7 @@ import { useLogin } from './useLogin';
 
 export const LoginScreen = () => {
   // context
-  const auth = useApi().getAuth();
+  const auth = useContextApi().getAuth();
   // state
   const [position, setPosition] = React.useState<SwitchPosition>('left');
   const action = position === 'left' ? 'login' : 'create-account';
