@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { spawn, spawnSync } = require('child_process');
 const { version } = require('../version.json');
 const { ENV, FLAVOR } = process.env;
@@ -18,9 +20,7 @@ const run = async () => {
   const { stdout } = spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
   const branch = stdout.toString().trim();
   if (branch !== ENV) {
-    console.warn(
-      `Atenção: a branch atual (${branch}) não é a branch do ambiente ${ENV}.`
-    );
+    console.warn(`Atenção: a branch atual (${branch}) não é a branch do ambiente ${ENV}.`);
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });

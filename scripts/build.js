@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { spawn, spawnSync } = require('child_process');
 const { version } = require('../version.json');
 const { ENV, FLAVOR, PLATFORM, DISTRIBUTION, TOOL } = process.env;
@@ -25,9 +27,7 @@ const run = async () => {
   const { stdout } = spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
   const branch = stdout.toString().trim();
   if (branch !== ENV) {
-    console.warn(
-      `Atenção: a branch atual (${branch}) não é a branch do ambiente ${ENV}.`
-    );
+    console.warn(`Atenção: a branch atual (${branch}) não é a branch do ambiente ${ENV}.`);
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });
@@ -48,24 +48,10 @@ const run = async () => {
     });
   } else {
     const buildType =
-      distribution === 'internal'
-        ? 'apk'
-        : platform === 'android'
-        ? 'app-bundle'
-        : 'archive';
-    spawn(
-      'expo',
-      [
-        `build:${platform}`,
-        '-t',
-        buildType,
-        '--release-channel',
-        releaseChannel,
-      ],
-      {
-        stdio: 'inherit',
-      }
-    );
+      distribution === 'internal' ? 'apk' : platform === 'android' ? 'app-bundle' : 'archive';
+    spawn('expo', [`build:${platform}`, '-t', buildType, '--release-channel', releaseChannel], {
+      stdio: 'inherit',
+    });
   }
 };
 
