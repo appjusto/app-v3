@@ -1,8 +1,8 @@
 import { Environment, Flavor } from '@appjusto/types';
 
-export interface ENV {
+export interface Env {
   FLAVOR: Flavor;
-  ENVIRONMENT: Environment;
+  ENV: Environment;
   EXPO_CONSUMER_ID: string;
   EXPO_COURIER_ID: string;
   EXPO_BUSINESS_ID: string;

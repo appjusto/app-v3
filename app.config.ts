@@ -1,14 +1,14 @@
 import { ConfigContext, ExpoConfig } from '@expo/config';
 import { Splash } from '@expo/config-types';
 import * as dotenv from 'dotenv';
-import { ENV } from './env';
+import { Env } from './env';
 import { Extra } from './v3/common/config/types';
 import { version, versionCode } from './version.json';
 
 const env = dotenv.config({ path: `${__dirname}/.env` }).parsed ?? {};
 const {
   FLAVOR,
-  ENVIRONMENT,
+  ENV,
   EXPO_BUSINESS_ID,
   EXPO_CONSUMER_ID,
   EXPO_COURIER_ID,
@@ -31,8 +31,8 @@ const {
 } = {
   ...env,
   ...process.env,
-} as unknown as ENV;
-const E = ENVIRONMENT.charAt(0).toUpperCase();
+} as unknown as Env;
+const E = ENV.charAt(0).toUpperCase();
 
 const expoId = () => {
   if (FLAVOR === 'consumer') return EXPO_CONSUMER_ID;
@@ -49,9 +49,8 @@ const firebaseAppId = () => {
 };
 
 const name = () => {
-  console.log(FLAVOR, ENVIRONMENT);
   let name = 'AppJusto';
-  if (ENVIRONMENT === 'live') {
+  if (ENV === 'live') {
     if (FLAVOR === 'consumer') return name;
     if (FLAVOR === 'courier') return `${name} Entregador`;
     if (FLAVOR === 'business') return `${name} Restaurante`;
@@ -63,7 +62,7 @@ const name = () => {
 
 const slug = () => {
   const slug = `app-justo-${FLAVOR}`;
-  if (ENVIRONMENT !== 'live') return `${slug}-${ENVIRONMENT}`;
+  if (ENV !== 'live') return `${slug}-${ENV}`;
   return slug;
 };
 
@@ -83,17 +82,16 @@ const splash = (): Splash => {
 };
 
 const appBundlePackage = () => {
-  return `br.com.appjusto.${FLAVOR}.${ENVIRONMENT}`;
+  return `br.com.appjusto.${FLAVOR}.${ENV}`;
 };
 
 const icon = (platform: 'ios' | 'android') => {
   return `./assets/${FLAVOR}/icon-${platform}.png`;
 };
 
-const getBaseDomain = () => `${ENVIRONMENT === 'live' ? '' : `${ENVIRONMENT}.`}appjusto.com.br`;
+const getBaseDomain = () => `${ENV === 'live' ? '' : `${ENV}.`}appjusto.com.br`;
 const getDeeplinkDomain = () => `${E}.deeplink.appjusto.com.br`;
-const getFallbackDomain = () =>
-  `${ENVIRONMENT === 'live' ? '' : `${ENVIRONMENT}.`}login.appjusto.com.br`;
+const getFallbackDomain = () => `${ENV === 'live' ? '' : `${ENV}.`}login.appjusto.com.br`;
 
 const plugins = (): (string | [] | [string] | [string, unknown])[] => {
   const common = ['expo-splash-screen', 'sentry-expo'];
@@ -216,7 +214,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     plugins: plugins(),
     extra: {
       flavor: FLAVOR,
-      environment: ENVIRONMENT,
+      environment: ENV,
       bundleIdentifier: appBundlePackage(),
       androidPackage: appBundlePackage(),
       eas: {

@@ -16,25 +16,29 @@
     "consumer-v10-internal-dev": {
       "extends": "consumer-v10-internal",
       "env": {
-        "ENV": "dev"
+        "ENV": "dev",
+        "GOOGLE_SERVICES_FILE": "./google-services-dev.json"
       }
     },
     "consumer-v10-internal-staging": {
       "extends": "consumer-v10-internal",
       "env": {
-        "ENV": "staging"
+        "ENV": "staging",
+        "GOOGLE_SERVICES_FILE": "./google-services-staging.json"
       }
     },
     "consumer-v10-internal-live": {
       "extends": "consumer-v10-internal",
       "env": {
-        "ENV": "live"
+        "ENV": "live",
+        "GOOGLE_SERVICES_FILE": "./google-services-live.json"
       }
     },
     "consumer-v10-store-live": {
       "env": {
         "FLAVOR": "consumer",
-        "ENV": "live"
+        "ENV": "live",
+        "GOOGLE_SERVICES_FILE": "./google-services-dev.json"
       },
       "channel": "v10",
       "distribution": "store",
@@ -55,25 +59,29 @@
     "courier-v10-internal-dev": {
       "extends": "courier-v10-internal",
       "env": {
-        "ENV": "dev"
+        "ENV": "dev",
+        "GOOGLE_SERVICES_FILE": "./google-services-dev.json"
       }
     },
     "courier-v10-internal-staging": {
       "extends": "courier-v10-internal",
       "env": {
-        "ENV": "staging"
+        "ENV": "staging",
+        "GOOGLE_SERVICES_FILE": "./google-services-staging.json"
       }
     },
     "courier-v10-internal-live": {
       "extends": "courier-v10-internal",
       "env": {
-        "ENV": "live"
+        "ENV": "live",
+        "GOOGLE_SERVICES_FILE": "./google-services-live.json"
       }
     },
     "courier-v10-store-live": {
       "env": {
         "FLAVOR": "courier",
-        "ENV": "live"
+        "ENV": "live",
+        "GOOGLE_SERVICES_FILE": "./google-services-live.json"
       },
       "channel": "v10",
       "distribution": "store",
@@ -94,25 +102,29 @@
     "business-v10-internal-dev": {
       "extends": "business-v10-internal",
       "env": {
-        "ENV": "dev"
+        "ENV": "dev",
+        "GOOGLE_SERVICES_FILE": "./google-services-dev.json"
       }
     },
     "business-v10-internal-staging": {
       "extends": "business-v10-internal",
       "env": {
-        "ENV": "staging"
+        "ENV": "staging",
+        "GOOGLE_SERVICES_FILE": "./google-services-staging.json"
       }
     },
     "business-v10-internal-live": {
       "extends": "business-v10-internal",
       "env": {
-        "ENV": "live"
+        "ENV": "live",
+        "GOOGLE_SERVICES_FILE": "./google-services-live.json"
       }
     },
     "business-v10-store-live": {
       "env": {
         "FLAVOR": "business",
-        "ENV": "live"
+        "ENV": "live",
+        "GOOGLE_SERVICES_FILE": "./google-services-live.json"
       },
       "channel": "v10",
       "distribution": "store",
