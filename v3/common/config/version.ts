@@ -1,9 +1,8 @@
 import * as Application from 'expo-application';
-import Constants from 'expo-constants';
 import { version } from '../../../version.json';
 
 export const getAppVersion = () => {
-  return Constants.manifest?.version ?? version;
+  return version;
 };
 
 export const getNativeAndManifestVersion = () => {

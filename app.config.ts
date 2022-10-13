@@ -5,7 +5,7 @@ import { Env } from './env';
 import { Extra } from './v3/common/config/types';
 import { version, versionCode } from './version.json';
 
-const env = dotenv.config({ path: `${__dirname}/.env` }).parsed ?? {};
+dotenv.config();
 const {
   FLAVOR,
   ENV,
@@ -28,11 +28,8 @@ const {
   IUGU_ACCOUNT_ID,
   ALGOLIA_APPID,
   ALGOLIA_APIKEY,
-} = {
-  ...env,
-  ...process.env,
-} as unknown as Env;
-const E = ENV.charAt(0).toUpperCase();
+} = process.env as unknown as Env;
+const E = ENV.charAt(0);
 
 const expoId = () => {
   if (FLAVOR === 'consumer') return EXPO_CONSUMER_ID;
@@ -57,7 +54,7 @@ const name = () => {
   }
   if (FLAVOR === 'courier') name = 'Entregador';
   if (FLAVOR === 'business') name = 'Restaurante';
-  return `(${E}) ${name}`;
+  return `(${E.toUpperCase()}) ${name}`;
 };
 
 const slug = () => {
@@ -250,11 +247,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     } as Extra,
     hooks: hooks(),
     updates: {
-      url: `https://u.expo.dev/${expoId()}`,
+      // url: `https://u.expo.dev/${expoId()}`,
       fallbackToCacheTimeout: 1000 * (FLAVOR === 'courier' ? 30 : 0),
     },
-    runtimeVersion: {
-      policy: 'sdkVersion',
-    },
+    // runtimeVersion: {
+    //   policy: 'sdkVersion',
+    // },
   };
 };

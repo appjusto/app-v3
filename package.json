@@ -4,7 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "prepare-env": "cp .$ENV.env .env",
-    "start": "npm run prepare-env && npx expo start -c",
+    "start": "npm run prepare-env && npx expo start",
     "update": "node ./scripts/update",
     "build": "node ./scripts/build",
     "clear-cache": "watchman watch-del-all && rm -rf node_modules/ && rm -f package-lock.json && npm install --legacy-peer-deps",
