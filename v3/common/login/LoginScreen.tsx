@@ -1,12 +1,13 @@
 import React from 'react';
-import { Keyboard, Pressable, Text, View } from 'react-native';
+import { Keyboard, Pressable, ScrollView, Text, View } from 'react-native';
 import { useContextApi } from '../../api/ApiContext';
 import { AuthMode } from '../../api/auth/AuthApi';
 import { AppJustoLogo } from '../../assets/AppJustoLogo';
+import { LoginScreenIllustration } from '../../assets/images/LoginScreenIllutration';
 import { CheckButton } from '../buttons/CheckButton';
 import { PillButton } from '../buttons/PillButton';
 import { RectButton } from '../buttons/RectButton';
-import { SwitchButton, SwitchPosition } from '../buttons/SwitchButton';
+import { SwitchPosition } from '../buttons/SwitchButton';
 import { LabeledInput } from '../inputs/LabeledInput';
 import { phoneFormatter, phoneMask } from '../inputs/pattern-input/formatters';
 import { numbersOnlyParser } from '../inputs/pattern-input/parsers';
@@ -37,7 +38,11 @@ export const LoginScreen = () => {
   };
   // UI
   return (
-    <View style={{ ...screens.default, padding: padding4 }}>
+    <ScrollView
+      style={{ ...screens.default, padding: padding4 }}
+      contentContainerStyle={{ flexGrow: 1 }}
+      scrollIndicatorInsets={{ right: 1 }}
+    >
       <Pressable
         onPressIn={() => Keyboard.dismiss()}
         delayLongPress={2000}
@@ -46,62 +51,60 @@ export const LoginScreen = () => {
             current === 'phone' ? 'passwordless' : current === 'passwordless' ? 'password' : 'phone'
           )
         }
+        style={{ marginTop: padding4 }}
       >
-        <AppJustoLogo />
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ marginBottom: padding4 }}>
+            <LoginScreenIllustration />
+          </View>
+          <AppJustoLogo />
+        </View>
       </Pressable>
-      <View style={{ flex: 1 }} />
-      <Text style={{ ...texts.x2l }}>Melhor para entregadores, restaurantes e consumidores</Text>
-      <View style={{ flex: 1 }} />
-      <View>
-        <SwitchButton
-          leftIcon="👤"
-          leftText="Fazer login"
-          rightIcon="🌱"
-          rightText="Criar conta"
-          position={position}
-          onToggle={(value) => setPosition(value)}
-        />
-        {authMode === 'passwordless' || authMode === 'password' ? (
-          <>
-            <LabeledInput
-              style={{ marginTop: padding6 }}
-              title={action === 'login' ? 'Fazer login' : 'Criar conta'}
-              placeholder="Digite seu e-mail"
-              value={email}
-              autoComplete="email"
-              keyboardType="email-address"
-              blurOnSubmit
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={setEmail}
-            />
-            {authMode === 'password' ? (
-              <LabeledInput
-                style={{ marginTop: padding4 }}
-                title="Sua senha"
-                placeholder="Digite sua senha"
-                value={password}
-                keyboardType="visible-password"
-                blurOnSubmit
-                autoCapitalize="none"
-                onChangeText={setPassword}
-              />
-            ) : null}
-          </>
-        ) : (
-          <PatternInput
+      <Text style={{ ...texts.x2l, paddingHorizontal: padding4, marginTop: padding4 }}>
+        Um delivery aberto, transparente e consciente
+      </Text>
+      {authMode === 'passwordless' || authMode === 'password' ? (
+        <>
+          <LabeledInput
             style={{ marginTop: padding6 }}
             title={action === 'login' ? 'Fazer login' : 'Criar conta'}
-            value={phone}
-            placeholder={'Número com DDD'}
-            mask={phoneMask}
-            parser={numbersOnlyParser}
-            formatter={phoneFormatter}
-            keyboardType="number-pad"
+            placeholder="Digite seu e-mail"
+            value={email}
+            autoComplete="email"
+            keyboardType="email-address"
             blurOnSubmit
-            onChangeText={setPhone}
+            autoCapitalize="none"
+            autoCorrect={false}
+            onChangeText={setEmail}
           />
-        )}
+          {authMode === 'password' ? (
+            <LabeledInput
+              style={{ marginTop: padding4 }}
+              title="Sua senha"
+              placeholder="Digite sua senha"
+              value={password}
+              keyboardType="visible-password"
+              blurOnSubmit
+              autoCapitalize="none"
+              onChangeText={setPassword}
+            />
+          ) : null}
+        </>
+      ) : (
+        <PatternInput
+          style={{ marginTop: padding6 }}
+          title={action === 'login' ? 'Fazer login' : 'Criar conta'}
+          value={phone}
+          placeholder={'Número com DDD'}
+          mask={phoneMask}
+          parser={numbersOnlyParser}
+          formatter={phoneFormatter}
+          keyboardType="number-pad"
+          blurOnSubmit
+          onChangeText={setPhone}
+        />
+      )}
+      <View>
         <View
           style={{ marginTop: padding6, flexDirection: 'row', justifyContent: 'space-between' }}
         >
@@ -120,6 +123,6 @@ export const LoginScreen = () => {
         disabled={disabled}
         activityIndicator={loading}
       />
-    </View>
+    </ScrollView>
   );
 };
