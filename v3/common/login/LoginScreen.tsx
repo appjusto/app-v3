@@ -3,16 +3,21 @@ import { Keyboard, Pressable, ScrollView, Text, View } from 'react-native';
 import { useContextApi } from '../../api/ApiContext';
 import { AuthMode } from '../../api/auth/AuthApi';
 import { AppJustoLogo } from '../../assets/AppJustoLogo';
-import { LoginScreenIllustration } from '../../assets/images/LoginScreenIllutration';
+import { AppleIcon } from '../../assets/AppleIcon';
+import { FacebookIcon } from '../../assets/FacebookIcon';
+import { GoogleIcon } from '../../assets/GoogleIcon';
+import { LoginScreenIllustration } from '../../assets/LoginScreenIllutration';
 import { CheckButton } from '../buttons/CheckButton';
 import { PillButton } from '../buttons/PillButton';
 import { RectButton } from '../buttons/RectButton';
+import { RoundIconButton } from '../buttons/RoundIconButton';
 import { SwitchPosition } from '../buttons/SwitchButton';
 import { LabeledInput } from '../inputs/LabeledInput';
 import { phoneFormatter, phoneMask } from '../inputs/pattern-input/formatters';
 import { numbersOnlyParser } from '../inputs/pattern-input/parsers';
 import { PatternInput } from '../inputs/PatternInput';
 import { screens } from '../styles';
+import { colors } from '../styles/colors';
 import { texts } from '../styles/fonts';
 import { padding4, padding6 } from '../styles/padding';
 import { useLogin } from './useLogin';
@@ -105,8 +110,31 @@ export const LoginScreen = () => {
         />
       )}
       <View>
+        <Text style={{ textAlign: 'center', marginTop: padding4, color: colors.grey700 }}>
+          Ou entre com
+        </Text>
         <View
-          style={{ marginTop: padding6, flexDirection: 'row', justifyContent: 'space-between' }}
+          style={{
+            flexDirection: 'row',
+            marginTop: padding4,
+          }}
+        >
+          <View style={{ width: '20%' }} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flex: 1,
+            }}
+          >
+            <RoundIconButton icon={<GoogleIcon />} onPress={() => null} />
+            <RoundIconButton icon={<FacebookIcon />} onPress={() => null} />
+            <RoundIconButton icon={<AppleIcon />} onPress={() => null} />
+          </View>
+          <View style={{ width: '20%' }} />
+        </View>
+        <View
+          style={{ marginTop: padding4, flexDirection: 'row', justifyContent: 'space-between' }}
         >
           <CheckButton
             title="Aceito os termos de uso do app"
