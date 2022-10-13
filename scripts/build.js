@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { spawn, spawnSync } = require('child_process');
 const { version } = require('../version.json');
-const { ENV, FLAVOR, PLATFORM, DISTRIBUTION, TOOL } = process.env;
-require('dotenv').config();
+const { ENV, FLAVOR, PLATFORM, DISTRIBUTION } = process.env;
+// require('dotenv').config();
 
 // Usage: ENV=dev FLAVOR=courier npm run build
 // Usage: ENV=staging FLAVOR=courier PLATFORM=ios npm run build
@@ -24,6 +24,7 @@ const run = async () => {
     console.warn('PLATFORM não definido: usando android');
   }
 
+  // check current branch
   const { stdout } = spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
   const branch = stdout.toString().trim();
   if (branch !== ENV) {
@@ -32,27 +33,16 @@ const run = async () => {
       setTimeout(resolve, 1000);
     });
   }
-
-  const releaseChannel = `v${version.slice(0, version.indexOf('.'))}`;
+  // update .env
+  spawnSync('cp', [`.${ENV}.env`, '.env']);
+  // build
+  const channel = `v${version.slice(0, version.indexOf('.'))}`;
   const platform = PLATFORM ?? 'android';
   const distribution = DISTRIBUTION ?? 'internal';
-  const profile = `${FLAVOR}-${releaseChannel}-${distribution}-${ENV}`;
-
-  spawnSync('npm', ['run', 'prepare-env']);
-
-  const tool = TOOL ?? (FLAVOR === 'courier' ? 'eas' : 'expo');
-  if (tool === 'eas') {
-    process.env['EAS_NO_VCS'] = '1';
-    spawn('eas', ['build', '--platform', platform, '--profile', profile], {
-      stdio: 'inherit',
-    });
-  } else {
-    const buildType =
-      distribution === 'internal' ? 'apk' : platform === 'android' ? 'app-bundle' : 'archive';
-    spawn('expo', [`build:${platform}`, '-t', buildType, '--release-channel', releaseChannel], {
-      stdio: 'inherit',
-    });
-  }
+  const profile = `${FLAVOR}-${channel}-${distribution}-${ENV}`;
+  spawn('eas', ['build', '--platform', platform, '--profile', profile], {
+    stdio: 'inherit',
+  });
 };
 
 run()

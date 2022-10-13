@@ -1,0 +1,124 @@
+{
+  "cli": {
+    "version": ">= 2.3.0"
+  },
+  "build": {
+    "consumer-v10-internal": {
+      "env": {
+        "FLAVOR": "consumer"
+      },
+      "channel": "v10",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "consumer-v10-internal-dev": {
+      "extends": "consumer-v10-internal",
+      "env": {
+        "ENV": "dev"
+      }
+    },
+    "consumer-v10-internal-staging": {
+      "extends": "consumer-v10-internal",
+      "env": {
+        "ENV": "staging"
+      }
+    },
+    "consumer-v10-internal-live": {
+      "extends": "consumer-v10-internal",
+      "env": {
+        "ENV": "live"
+      }
+    },
+    "consumer-v10-store-live": {
+      "env": {
+        "FLAVOR": "consumer",
+        "ENV": "live"
+      },
+      "channel": "v10",
+      "distribution": "store",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
+    "courier-v10-internal": {
+      "env": {
+        "FLAVOR": "courier"
+      },
+      "channel": "v10",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "courier-v10-internal-dev": {
+      "extends": "courier-v10-internal",
+      "env": {
+        "ENV": "dev"
+      }
+    },
+    "courier-v10-internal-staging": {
+      "extends": "courier-v10-internal",
+      "env": {
+        "ENV": "staging"
+      }
+    },
+    "courier-v10-internal-live": {
+      "extends": "courier-v10-internal",
+      "env": {
+        "ENV": "live"
+      }
+    },
+    "courier-v10-store-live": {
+      "env": {
+        "FLAVOR": "courier",
+        "ENV": "live"
+      },
+      "channel": "v10",
+      "distribution": "store",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
+    "business-v10-internal": {
+      "env": {
+        "FLAVOR": "business"
+      },
+      "channel": "v10",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "business-v10-internal-dev": {
+      "extends": "business-v10-internal",
+      "env": {
+        "ENV": "dev"
+      }
+    },
+    "business-v10-internal-staging": {
+      "extends": "business-v10-internal",
+      "env": {
+        "ENV": "staging"
+      }
+    },
+    "business-v10-internal-live": {
+      "extends": "business-v10-internal",
+      "env": {
+        "ENV": "live"
+      }
+    },
+    "business-v10-store-live": {
+      "env": {
+        "FLAVOR": "business",
+        "ENV": "live"
+      },
+      "channel": "v10",
+      "distribution": "store",
+      "android": {
+        "buildType": "app-bundle"
+      }
+    }
+  }
+}

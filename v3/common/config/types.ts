@@ -2,22 +2,21 @@ import { Environment, Flavor } from '@appjusto/types';
 
 export interface Extra {
   flavor: Flavor;
+  environment: Environment;
   bundleIdentifier: string;
   androidPackage: string;
   firebase: FirebaseConfig;
+  eas: {
+    projectId: string;
+  };
   analytics: AnalyticsConfig;
   iugu: {
     accountId: string;
   };
   algolia: AlgoliaConfig;
-  environment: Environment;
 }
 
 export interface AnalyticsConfig {
-  segmentConsumerAndroidKey: string;
-  segmentConsumeriOSKey: string;
-  segmentCourierAndroidKey: string;
-  segmentCourieriOSKey: string;
   sentryDNS: string;
 }
 

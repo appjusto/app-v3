@@ -5,7 +5,7 @@
   "scripts": {
     "prepare-env": "cp .$ENV.env .env",
     "start": "npm run prepare-env && npx expo start -c",
-    "publish": "node ./scripts/publish",
+    "update": "node ./scripts/update",
     "build": "node ./scripts/build",
     "clear-cache": "watchman watch-del-all && rm -rf node_modules/ && rm -f package-lock.json && npm install --legacy-peer-deps",
     "inc-version": "node ./version-inc",
@@ -44,7 +44,8 @@
     "react-native-screens": "~3.15.0",
     "react-native-svg": "12.3.0",
     "sentry-expo": "~5.0.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "expo-updates": "~0.14.6"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

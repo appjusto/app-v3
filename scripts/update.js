@@ -4,7 +4,7 @@ const { spawn, spawnSync } = require('child_process');
 const { version } = require('../version.json');
 const { ENV, FLAVOR } = process.env;
 
-// Usage: ENV=staging FLAVOR=courier npm run publish
+// Usage: ENV=staging FLAVOR=courier npm run update
 
 const run = async () => {
   if (!ENV) {
@@ -17,6 +17,10 @@ const run = async () => {
     process.exit(-1);
   }
 
+  // update .env
+  spawnSync('cp', [`.${ENV}.env`, '.env']);
+
+  // check current branch
   const { stdout } = spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
   const branch = stdout.toString().trim();
   if (branch !== ENV) {
@@ -26,10 +30,10 @@ const run = async () => {
     });
   }
 
-  const releaseChannel = `v${version.slice(0, version.indexOf('.'))}`;
-
+  // update
+  const channel = `v${version.slice(0, version.indexOf('.'))}`;
   spawnSync('npm', ['run', 'prepare-env']);
-  spawn('expo', ['publish', '--release-channel', releaseChannel], {
+  spawn('eas', ['update', '--branch', channel], {
     stdio: 'inherit',
   });
 };
