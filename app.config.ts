@@ -9,15 +9,13 @@ dotenv.config();
 const {
   FLAVOR,
   ENV,
-  EXPO_ID,
+  EXPO_CONSUMER_ID,
+  EXPO_COURIER_ID,
+  EXPO_BUSINESS_ID,
+  MAPS_API_KEY,
+  FIREBASE_REGION,
   GOOGLE_SERVICES_JSON,
   GOOGLE_SERVICES_PLIST,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_REGION,
-  FIREBASE_API_KEY_IOS,
-  FIREBASE_API_KEY_ANDROID,
-  FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_APP_ID,
   FIREBASE_EMULATOR,
   FIREBASE_EMULATOR_HOST,
   SENTRY_DSN,
@@ -27,6 +25,13 @@ const {
   ALGOLIA_APIKEY,
 } = process.env as unknown as Env;
 const E = ENV.charAt(0);
+
+const expoId = () => {
+  if (FLAVOR === 'consumer') return EXPO_CONSUMER_ID;
+  if (FLAVOR === 'courier') return EXPO_COURIER_ID;
+  if (FLAVOR === 'business') return EXPO_BUSINESS_ID;
+  throw new Error('FLAVOR inválido');
+};
 
 const name = () => {
   let name = 'AppJusto';
@@ -179,7 +184,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       ],
       googleServicesFile: GOOGLE_SERVICES_PLIST,
       config: {
-        googleMapsApiKey: FIREBASE_API_KEY_IOS,
+        googleMapsApiKey: MAPS_API_KEY,
       },
     },
     android: {
@@ -194,7 +199,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       googleServicesFile: GOOGLE_SERVICES_JSON,
       config: {
         googleMaps: {
-          apiKey: FIREBASE_API_KEY_ANDROID,
+          apiKey: MAPS_API_KEY,
         },
       },
     },
@@ -205,22 +210,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       bundleIdentifier: appBundlePackage(),
       androidPackage: appBundlePackage(),
       eas: {
-        projectId: EXPO_ID,
+        projectId: expoId(),
       },
       firebase: {
-        apiKeyAndroid: FIREBASE_API_KEY_ANDROID,
-        apiKeyiOS: FIREBASE_API_KEY_IOS,
-        authDomain: `${FIREBASE_PROJECT_ID}.firebaseapp.com`,
         region: FIREBASE_REGION,
-        projectId: FIREBASE_PROJECT_ID,
-        storageBucket:
-          FIREBASE_EMULATOR === 'true'
-            ? 'gs://default-bucket'
-            : `${FIREBASE_PROJECT_ID}.appspot.com`,
-        messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-        appId: FIREBASE_APP_ID,
         emulator: {
-          enabled: process.env.FIREBASE_EMULATOR === 'true',
+          enabled: FIREBASE_EMULATOR === 'true',
           host: FIREBASE_EMULATOR_HOST,
         },
       },
@@ -237,11 +232,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     } as Extra,
     hooks: hooks(),
     updates: {
-      // url: `https://u.expo.dev/${expoId()}`,
+      url: `https://u.expo.dev/${expoId()}`,
       fallbackToCacheTimeout: 1000 * (FLAVOR === 'courier' ? 30 : 0),
     },
-    // runtimeVersion: {
-    //   policy: 'sdkVersion',
-    // },
+    runtimeVersion: {
+      policy: 'sdkVersion',
+    },
   };
 };

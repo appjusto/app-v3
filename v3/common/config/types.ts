@@ -26,17 +26,9 @@ export interface AlgoliaConfig {
 }
 
 export interface FirebaseConfig {
-  apiKeyAndroid: string;
-  apiKeyiOS: string;
-  authDomain: string;
   region: string;
-  projectId: string;
-  storageBucket: string;
-  messagingSenderId: string;
-  appId: string;
   emulator: {
     enabled: boolean;
     host?: string;
   };
-  measurementId?: string;
 }
