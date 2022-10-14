@@ -1,4 +1,4 @@
-import { Canvas, RoundedRect, SkiaView, useSpring } from '@shopify/react-native-skia';
+// import { Canvas, RoundedRect, SkiaView, useSpring } from '@shopify/react-native-skia';
 import React from 'react';
 import { LayoutRectangle, Pressable, Text, View, ViewProps } from 'react-native';
 import { colors } from '../styles/colors';
@@ -30,9 +30,9 @@ export const SwitchButton = ({
   const [layout, setLayout] = React.useState<LayoutRectangle>();
   // UI
   const padding = padding1;
-  const thumbX = useSpring(
-    position === 'left' ? padding : layout?.width ? layout.width * 0.5 + padding : 0
-  );
+  // const thumbX = useSpring(
+  //   position === 'left' ? padding : layout?.width ? layout.width * 0.5 + padding : 0
+  // );
   return (
     <View
       style={[{ height: 54 }, style]}
@@ -47,7 +47,7 @@ export const SwitchButton = ({
         >
           {() => (
             <View style={{ flex: 1 }}>
-              <SkiaView style={{ flex: 1 }}>
+              {/* <SkiaView style={{ flex: 1 }}>
                 <Canvas style={{ width: layout.width, height: 54, position: 'absolute' }}>
                   <RoundedRect
                     x={0}
@@ -75,7 +75,7 @@ export const SwitchButton = ({
                     color={colors.green100}
                   />
                 </Canvas>
-              </SkiaView>
+              </SkiaView> */}
               <View
                 style={{
                   flexDirection: 'row',
