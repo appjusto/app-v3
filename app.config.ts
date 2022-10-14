@@ -9,18 +9,15 @@ dotenv.config();
 const {
   FLAVOR,
   ENV,
-  EXPO_BUSINESS_ID,
-  EXPO_CONSUMER_ID,
-  EXPO_COURIER_ID,
-  GOOGLE_SERVICES_FILE,
+  EXPO_ID,
+  GOOGLE_SERVICES_JSON,
+  GOOGLE_SERVICES_PLIST,
   FIREBASE_PROJECT_ID,
   FIREBASE_REGION,
   FIREBASE_API_KEY_IOS,
   FIREBASE_API_KEY_ANDROID,
   FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_CONSUMER_APP_ID,
-  FIREBASE_COURIER_APP_ID,
-  FIREBASE_BUSINESS_APP_ID,
+  FIREBASE_APP_ID,
   FIREBASE_EMULATOR,
   FIREBASE_EMULATOR_HOST,
   SENTRY_DSN,
@@ -30,20 +27,6 @@ const {
   ALGOLIA_APIKEY,
 } = process.env as unknown as Env;
 const E = ENV.charAt(0);
-
-const expoId = () => {
-  if (FLAVOR === 'consumer') return EXPO_CONSUMER_ID;
-  if (FLAVOR === 'courier') return EXPO_COURIER_ID;
-  if (FLAVOR === 'business') return EXPO_BUSINESS_ID;
-  throw new Error('FLAVOR inválido');
-};
-
-const firebaseAppId = () => {
-  if (FLAVOR === 'courier') return FIREBASE_COURIER_APP_ID;
-  if (FLAVOR === 'business') return FIREBASE_BUSINESS_APP_ID;
-  if (FLAVOR === 'consumer') return FIREBASE_CONSUMER_APP_ID;
-  throw new Error('FLAVOR inválido');
-};
 
 const name = () => {
   let name = 'AppJusto';
@@ -194,6 +177,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         `applinks:${getDeeplinkDomain()}`,
         `applinks:${getFallbackDomain()}`,
       ],
+      googleServicesFile: GOOGLE_SERVICES_PLIST,
       config: {
         googleMapsApiKey: FIREBASE_API_KEY_IOS,
       },
@@ -205,9 +189,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         foregroundImage: icon('android'),
         backgroundColor: androidBackgroundColor(),
       },
-      googleServicesFile: GOOGLE_SERVICES_FILE,
       permissions: androidPermissions(),
       intentFilters: intentFilters(),
+      googleServicesFile: GOOGLE_SERVICES_JSON,
       config: {
         googleMaps: {
           apiKey: FIREBASE_API_KEY_ANDROID,
@@ -221,7 +205,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       bundleIdentifier: appBundlePackage(),
       androidPackage: appBundlePackage(),
       eas: {
-        projectId: expoId(),
+        projectId: EXPO_ID,
       },
       firebase: {
         apiKeyAndroid: FIREBASE_API_KEY_ANDROID,
@@ -234,7 +218,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             ? 'gs://default-bucket'
             : `${FIREBASE_PROJECT_ID}.appspot.com`,
         messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-        appId: firebaseAppId(),
+        appId: FIREBASE_APP_ID,
         emulator: {
           enabled: process.env.FIREBASE_EMULATOR === 'true',
           host: FIREBASE_EMULATOR_HOST,
