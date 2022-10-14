@@ -13,6 +13,17 @@
         "buildType": "apk"
       }
     },
+    "consumer-v10-devclient-dev": {
+      "extends": "consumer-v10-internal",
+      "developmentClient": true,
+      "env": {
+        "ENV": "dev",
+        "GOOGLE_SERVICES_FILE": "./google-services-dev.json"
+      },
+      "ios": {
+        "simulator": true
+      }
+    },
     "consumer-v10-internal-dev": {
       "extends": "consumer-v10-internal",
       "env": {
@@ -54,6 +65,17 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      }
+    },
+    "courier-v10-devclient-dev": {
+      "extends": "courier-v10-internal",
+      "developmentClient": true,
+      "env": {
+        "ENV": "dev",
+        "GOOGLE_SERVICES_FILE": "./google-services-dev.json"
+      },
+      "ios": {
+        "simulator": true
       }
     },
     "courier-v10-internal-dev": {
