@@ -96,8 +96,7 @@ const plugins = (): Plugins => {
     'expo-splash-screen',
     'sentry-expo',
     '@react-native-firebase/app',
-    '@react-native-firebase/firestore',
-    ['expo-build-properties', { ios: { useFrameworks: 'static ' } }],
+    ['expo-build-properties', { ios: { useFrameworks: 'static' } }],
   ];
   if (FLAVOR === 'courier')
     return [
