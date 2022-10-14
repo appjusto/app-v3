@@ -13,3 +13,21 @@ FLAVOR=courier ENV=dev eas init
 ```
 cat .dev.env | grep "=" | awk -F "=" '{print "--name="$1" --value="$2}' | FLAVOR=courier ENV=dev xargs -n2 eas secret:create --force --type string
 ```
+
+# dev client config
+
+1. build dev client
+
+```
+ENV=dev FLAVOR=consumer DISTRIBUTION=devclient PLATFORM=ios npm run build
+```
+
+2. unpack and drag the app on the simulator
+
+3. run
+
+```
+FLAVOR=consumer ENV=dev npm run dev
+```
+
+#

@@ -90,8 +90,15 @@ const getBaseDomain = () => `${ENV === 'live' ? '' : `${ENV}.`}appjusto.com.br`;
 const getDeeplinkDomain = () => `${E}.deeplink.appjusto.com.br`;
 const getFallbackDomain = () => `${ENV === 'live' ? '' : `${ENV}.`}login.appjusto.com.br`;
 
-const plugins = (): (string | [] | [string] | [string, unknown])[] => {
-  const common = ['expo-splash-screen', 'sentry-expo'];
+type Plugins = (string | [] | [string] | [string, unknown])[];
+const plugins = (): Plugins => {
+  const common: Plugins = [
+    'expo-splash-screen',
+    'sentry-expo',
+    '@react-native-firebase/app',
+    '@react-native-firebase/firestore',
+    ['expo-build-properties', { ios: { useFrameworks: 'static ' } }],
+  ];
   if (FLAVOR === 'courier')
     return [
       ...common,
