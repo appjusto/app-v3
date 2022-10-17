@@ -85,6 +85,13 @@ const plugins = (): Plugins => {
     'sentry-expo',
     '@react-native-firebase/app',
     ['expo-build-properties', { ios: { useFrameworks: 'static' } }],
+    [
+      '@react-native-google-signin/google-signin',
+      {
+        android: { googleServicesFile: './google-services.json' },
+        ios: { googleServicesFile: './GoogleService-Info.plist' },
+      },
+    ],
   ];
   if (FLAVOR === 'courier')
     return [
