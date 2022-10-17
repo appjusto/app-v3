@@ -1,41 +1,30 @@
-import { initializeApp } from 'firebase/app';
-import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth';
-import { connectFirestoreEmulator, Firestore, getFirestore } from 'firebase/firestore';
-import { connectFunctionsEmulator, Functions, getFunctions } from 'firebase/functions';
-import { connectStorageEmulator, FirebaseStorage, getStorage } from 'firebase/storage';
-import { Platform } from 'react-native';
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import functions, { FirebaseFunctionsTypes } from '@react-native-firebase/functions';
+import storage from '@react-native-firebase/storage';
+
 import { getManifestExtra } from '../common/config';
-import { Extra } from '../common/config/types';
 import AuthApi from './auth/AuthApi';
 import ProfileApi from './profile/ProfileApi';
 
 export default class Api {
-  private authentication: Auth;
-  private firestore: Firestore;
-  private functions: Functions;
-  private storage: FirebaseStorage;
-
   private auth: AuthApi;
   private profile: ProfileApi;
+  private functions: FirebaseFunctionsTypes.Module;
 
-  constructor(extra: Extra) {
+  constructor() {
+    const extra = getManifestExtra();
+    auth().languageCode = 'pt';
+    this.functions = firebase.app().functions(extra.firebase.region);
     const emulated = extra.firebase.emulator.enabled && extra.firebase.emulator.host;
-    const apiKey =
-      Platform.OS === 'android' ? extra.firebase.apiKeyAndroid : extra.firebase.apiKeyiOS;
-    const app = initializeApp({ ...extra.firebase, apiKey });
-    this.authentication = getAuth(app);
-    this.authentication.languageCode = 'pt';
-    this.firestore = getFirestore(app);
-    this.functions = getFunctions(app, extra.firebase.region);
-    this.storage = getStorage(app);
     if (emulated && extra.firebase.emulator.host) {
       const host = extra.firebase.emulator.host;
-      connectAuthEmulator(this.authentication, `http://${host}:9099`);
-      connectFirestoreEmulator(this.firestore, host, 8080);
-      connectFunctionsEmulator(this.functions, host, 5001);
-      connectStorageEmulator(this.storage, host, 9199);
+      auth().useEmulator(`http://${host}:9099`);
+      firestore().useEmulator(host, 8080);
+      functions().useEmulator(host, 5001);
+      storage().useEmulator(host, 9199);
+      // TODO: firebase.app().storage('gs://default-bucket')
     }
-
     this.auth = new AuthApi();
     this.profile = new ProfileApi(this.auth);
   }
@@ -49,4 +38,4 @@ export default class Api {
   }
 }
 
-export const api = new Api(getManifestExtra());
+export const api = new Api();

@@ -1,3 +1,4 @@
+import 'expo-dev-client';
 import { LogBox } from 'react-native';
 import { App } from './v3/common/App';
 
