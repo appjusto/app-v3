@@ -127,9 +127,9 @@ export const LoginScreen = () => {
               flex: 1,
             }}
           >
-            <RoundIconButton icon={<GoogleIcon />} onPress={() => null} />
-            <RoundIconButton icon={<FacebookIcon />} onPress={() => null} />
-            <RoundIconButton icon={<AppleIcon />} onPress={() => null} />
+            <RoundIconButton icon={<GoogleIcon />} onPress={() => auth.signInWithGoogle()} />
+            <RoundIconButton icon={<FacebookIcon />} />
+            <RoundIconButton icon={<AppleIcon />} />
           </View>
           <View style={{ width: '20%' }} />
         </View>

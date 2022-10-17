@@ -1,11 +1,16 @@
 import { DeleteAccountPayload } from '@appjusto/types';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { addDoc, serverTimestamp } from 'firebase/firestore';
 import { getFlavor, getManifestExtra } from '../../common/config';
 import { getDeeplinkDomain, getFallbackDomain } from '../../common/config/domains';
 import { getAppVersion } from '../../common/config/version';
 import { getLoginsCollection } from '../../common/core/refs/firestore';
 import { getDeleteAccountCallable } from '../../common/core/refs/functions';
+
+GoogleSignin.configure({
+  webClientId: getManifestExtra().googleSignIn.webClientId,
+});
 
 export type AuthMode = 'passwordless' | 'password' | 'phone';
 
@@ -58,6 +63,18 @@ export default class AuthApi {
   isSignInWithEmailLink(link: string | null): boolean {
     if (!link) return false;
     return auth().isSignInWithEmailLink(link);
+  }
+
+  async signInWithGoogle() {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    console.log(googleCredential);
+    return auth().signInWithCredential(googleCredential);
   }
 
   // login with email / password
