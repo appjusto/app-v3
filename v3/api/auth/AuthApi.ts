@@ -9,7 +9,7 @@ import { getLoginsCollection } from '../../common/core/refs/firestore';
 import { getDeleteAccountCallable } from '../../common/core/refs/functions';
 
 GoogleSignin.configure({
-  webClientId: getManifestExtra().googleSignIn.webClientId,
+  webClientId: getManifestExtra().firebase.webClientId,
 });
 
 export type AuthMode = 'passwordless' | 'password' | 'phone';
