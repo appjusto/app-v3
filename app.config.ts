@@ -90,7 +90,7 @@ const plugins = (): Plugins => {
       '@react-native-google-signin/google-signin',
       {
         android: { googleServicesFile: './google-services.json' },
-        ios: { googleServicesFile: './GoogleService-Info.plist' },
+        ios: { googleServicesFile: './GoogleService-Info-consumer-dev.plist' },
       },
     ],
   ];
