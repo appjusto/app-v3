@@ -14,7 +14,6 @@ export interface Extra {
     accountId: string;
   };
   algolia: AlgoliaConfig;
-  googleSignIn: GoogleSignInConfig;
 }
 
 export interface AnalyticsConfig {
@@ -32,8 +31,5 @@ export interface FirebaseConfig {
     enabled: boolean;
     host?: string;
   };
-}
-
-export interface GoogleSignInConfig {
   webClientId: string;
 }

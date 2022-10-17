@@ -9,6 +9,7 @@ export interface Env {
   FIREBASE_REGION: string;
   GOOGLE_SERVICES_JSON: string;
   GOOGLE_SERVICES_PLIST: string;
+  GOOGLE_SIGN_IN_WEB_CLIENT_ID: string;
   MAPS_API_KEY: string;
   FIREBASE_EMULATOR: string;
   FIREBASE_EMULATOR_HOST: string;

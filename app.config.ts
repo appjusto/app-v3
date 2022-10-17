@@ -14,6 +14,7 @@ const {
   EXPO_BUSINESS_ID,
   MAPS_API_KEY,
   FIREBASE_REGION,
+  GOOGLE_SIGN_IN_WEB_CLIENT_ID,
   GOOGLE_SERVICES_JSON,
   GOOGLE_SERVICES_PLIST,
   FIREBASE_EMULATOR,
@@ -225,6 +226,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           enabled: FIREBASE_EMULATOR === 'true',
           host: FIREBASE_EMULATOR_HOST,
         },
+        webClientId: GOOGLE_SIGN_IN_WEB_CLIENT_ID,
       },
       analytics: {
         sentryDNS: SENTRY_DSN,
