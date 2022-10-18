@@ -1,3 +1,5 @@
-import { getFunctions, httpsCallable } from 'firebase/functions';
+import firebase from '@react-native-firebase/app';
+import { getFirebaseRegion } from '../../config';
 
-export const getDeleteAccountCallable = () => httpsCallable(getFunctions(), 'deleteAccount');
+export const getDeleteAccount = () =>
+  firebase.app().functions(getFirebaseRegion()).httpsCallable('deleteAccount');

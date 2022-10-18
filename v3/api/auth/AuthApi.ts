@@ -1,12 +1,12 @@
 import { DeleteAccountPayload } from '@appjusto/types';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { addDoc, serverTimestamp } from 'firebase/firestore';
 import { getFirebaseWebClientId, getFlavor, getManifestExtra } from '../../common/config';
 import { getDeeplinkDomain, getFallbackDomain } from '../../common/config/domains';
 import { getAppVersion } from '../../common/config/version';
 import { getLoginsCollection } from '../../common/core/refs/firestore';
-import { getDeleteAccountCallable } from '../../common/core/refs/functions';
+import { getDeleteAccount } from '../../common/core/refs/functions';
 
 export type AuthMode = 'passwordless' | 'password' | 'phone';
 
@@ -32,10 +32,10 @@ export default class AuthApi {
     this.email = email;
     const { flavor, environment, bundleIdentifier, androidPackage } = getManifestExtra();
     try {
-      await addDoc(getLoginsCollection(), {
+      await getLoginsCollection().add({
         email,
         flavor,
-        signInAt: serverTimestamp(),
+        signInAt: firestore.FieldValue.serverTimestamp(),
       });
     } catch (error) {
       console.warn(error);
@@ -82,10 +82,10 @@ export default class AuthApi {
   // login with email / password
   async signInWithEmailAndPassword(email: string, password: string) {
     try {
-      await addDoc(getLoginsCollection(), {
+      await getLoginsCollection().add({
         email,
         flavor: getFlavor(),
-        signInAt: serverTimestamp(),
+        signInAt: firestore.FieldValue.serverTimestamp(),
       });
     } catch (error) {
       // Sentry.Native.captureException(error);
@@ -98,10 +98,10 @@ export default class AuthApi {
   async signInWithPhoneNumber(number: string, countryCode = '55') {
     const phone = `+${countryCode}${number}`;
     try {
-      await addDoc(getLoginsCollection(), {
+      await getLoginsCollection().add({
         phone,
         flavor: getFlavor(),
-        signInAt: serverTimestamp(),
+        signInAt: firestore.FieldValue.serverTimestamp(),
       });
     } catch (error) {
       // Sentry.Native.captureException(error);
@@ -146,7 +146,7 @@ export default class AuthApi {
 
   // firebase functions
   deleteAccount(payload: Partial<DeleteAccountPayload>) {
-    return getDeleteAccountCallable()({
+    return getDeleteAccount()({
       ...payload,
       meta: { version: getAppVersion() },
     });

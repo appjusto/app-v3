@@ -1,8 +1,10 @@
 import { WithId } from '@appjusto/types';
-import { DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
-export type FirebaseQueryDocumentSnapshot = QueryDocumentSnapshot<DocumentData>;
-export type FirebaseDocumentSnapshot = DocumentSnapshot<DocumentData>;
+export type FirebaseQueryDocumentSnapshot =
+  FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>;
+export type FirebaseDocumentSnapshot =
+  FirebaseFirestoreTypes.DocumentSnapshot<FirebaseFirestoreTypes.DocumentData>;
 export type FirebaseDocument = FirebaseQueryDocumentSnapshot | FirebaseDocumentSnapshot;
 
 export const documentAs = <T extends object>(doc: FirebaseDocument): WithId<T> => ({

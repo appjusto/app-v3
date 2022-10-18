@@ -1,5 +1,5 @@
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { useURL } from 'expo-linking';
-import { User } from 'firebase/auth';
 import React from 'react';
 import { api } from '../Api';
 import { useContextApi } from '../ApiContext';
@@ -21,7 +21,7 @@ const extractAuthLink = (link: string) => {
   return null;
 };
 
-export const useAuthDeeplink = (): [AuthState, User | undefined | null] => {
+export const useAuthDeeplink = (): [AuthState, FirebaseAuthTypes.User | undefined | null] => {
   // context
   const auth = useContextApi().getAuth();
   const user = useUser();
