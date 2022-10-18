@@ -2,20 +2,22 @@ import { DeleteAccountPayload } from '@appjusto/types';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { addDoc, serverTimestamp } from 'firebase/firestore';
-import { getFlavor, getManifestExtra } from '../../common/config';
+import { getFirebaseWebClientId, getFlavor, getManifestExtra } from '../../common/config';
 import { getDeeplinkDomain, getFallbackDomain } from '../../common/config/domains';
 import { getAppVersion } from '../../common/config/version';
 import { getLoginsCollection } from '../../common/core/refs/firestore';
 import { getDeleteAccountCallable } from '../../common/core/refs/functions';
 
-GoogleSignin.configure({
-  webClientId: getManifestExtra().firebase.webClientId,
-});
-
 export type AuthMode = 'passwordless' | 'password' | 'phone';
 
 export default class AuthApi {
   private email: string | null = null;
+
+  constructor() {
+    GoogleSignin.configure({
+      webClientId: getFirebaseWebClientId(),
+    });
+  }
 
   getDefaultAuthMode() {
     return getManifestExtra().flavor === 'courier' ? 'phone' : 'passwordless';

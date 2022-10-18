@@ -1,11 +1,10 @@
-import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import React from 'react';
 import { Pressable, View, ViewProps } from 'react-native';
 import { colors } from '../styles/colors';
 
 interface Props extends ViewProps {
   icon: React.ReactNode;
-  onPress?: () => Promise<FirebaseAuthTypes.UserCredential>;
+  onPress: () => void;
   disabled?: boolean;
 }
 
