@@ -10,6 +10,10 @@ import { getDeleteAccount } from '../../common/core/refs/functions';
 
 export type AuthMode = 'passwordless' | 'password' | 'phone' | 'google';
 
+interface AuthError {
+  code: string;
+}
+
 export default class AuthApi {
   private email: string | null = null;
 
@@ -73,12 +77,13 @@ export default class AuthApi {
       const { idToken } = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       return auth().signInWithCredential(googleCredential);
-    } catch (error: any) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    } catch (error: unknown) {
+      const { code } = error as AuthError;
+      if (code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('user canceled google sign in action');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
+      } else if (code === statusCodes.IN_PROGRESS) {
         console.log('operation is in progress');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      } else if (code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         console.log('play services not available or outdated');
       } else {
         console.log(error);

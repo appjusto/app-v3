@@ -5,17 +5,17 @@ import { AuthMode } from '../../api/auth/AuthApi';
 import { validateEmail } from '../core/validators';
 
 export const useLogin = (
-  authMode: AuthMode,
   email: string,
   password: string,
   phone: string,
   acceptedTerms: boolean
 ) => {
-  // conext
+  // context
   const api = useContextApi();
   // state
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<unknown>();
+  const [authMode, setAuthMode] = React.useState<AuthMode>(api.getAuth().getDefaultAuthMode());
   const disabled = (() => {
     if (!acceptedTerms) return true;
     if (loading) return true;
@@ -51,5 +51,5 @@ export const useLogin = (
     }
   }, [api, authMode, disabled, email, password]);
   // result
-  return { disabled, loading, error, login };
+  return { disabled, loading, error, authMode, setAuthMode, login };
 };

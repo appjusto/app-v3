@@ -1,7 +1,5 @@
 import React from 'react';
 import { Keyboard, Pressable, ScrollView, Text, View } from 'react-native';
-import { useContextApi } from '../../api/ApiContext';
-import { AuthMode } from '../../api/auth/AuthApi';
 import { AppJustoLogo } from '../../assets/AppJustoLogo';
 import { AppleIcon } from '../../assets/AppleIcon';
 import { FacebookIcon } from '../../assets/FacebookIcon';
@@ -23,18 +21,21 @@ import { padding4, padding6 } from '../styles/padding';
 import { useLogin } from './useLogin';
 
 export const LoginScreen = () => {
-  // context
-  const auth = useContextApi().getAuth();
   // state
-  const [position, setPosition] = React.useState<SwitchPosition>('left');
+  const [position] = React.useState<SwitchPosition>('left');
   const action = position === 'left' ? 'login' : 'create-account';
   const [phone, setPhone] = React.useState('');
   const [email, setEmail] = React.useState('pdandradeb@gmail.com');
   const [password, setPassword] = React.useState('');
-  const [authMode, setAuthMode] = React.useState<AuthMode>(auth.getDefaultAuthMode());
+
   // const [authMode, setAuthMode] = React.useState<AuthMode>('phone');
   const [acceptedTerms, setAcceptTerms] = React.useState(false);
-  const { login, loading, disabled } = useLogin(authMode, email, password, phone, acceptedTerms);
+  const { login, authMode, setAuthMode, loading, disabled } = useLogin(
+    email,
+    password,
+    phone,
+    acceptedTerms
+  );
   // handlers
   const submitHandler = () => {
     if (action === 'login') {
