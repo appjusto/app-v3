@@ -27,8 +27,6 @@ export const LoginScreen = () => {
   const [phone, setPhone] = React.useState('');
   const [email, setEmail] = React.useState('pdandradeb@gmail.com');
   const [password, setPassword] = React.useState('');
-
-  // const [authMode, setAuthMode] = React.useState<AuthMode>('phone');
   const [acceptedTerms, setAcceptTerms] = React.useState(false);
   const { login, authMode, setAuthMode, loading, disabled } = useLogin(
     email,

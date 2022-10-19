@@ -22,8 +22,10 @@ export const useLogin = (
     if (authMode === 'phone') {
       if (isEmpty(phone)) return true;
     } else {
-      if (isEmpty(email)) return true;
-      if (validateEmail(email).status === 'error') return true;
+      if (authMode !== 'google') {
+        if (isEmpty(email)) return true;
+        if (validateEmail(email).status === 'error') return true;
+      }
     }
     return false;
   })();
@@ -41,6 +43,7 @@ export const useLogin = (
         } else if (authMode === 'phone') {
           // await auth.phone(email, password);
         } else if (authMode === 'google') {
+          console.log('ué?');
           await api.getAuth().signInWithGoogle();
         }
         setLoading(false);
