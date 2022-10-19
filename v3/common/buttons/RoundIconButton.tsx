@@ -10,21 +10,26 @@ interface Props extends ViewProps {
 
 export const RoundIconButton = ({ icon, onPress, disabled = false }: Props) => {
   return (
-    <View
-      style={{
-        height: 52,
-        width: 52,
-        borderRadius: 26,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: colors.grey500,
-        backgroundColor: colors.grey50,
-      }}
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      android_ripple={{ color: colors.white }}
+      style={({ pressed }) => pressed && { opacity: 0.6 }}
     >
-      <Pressable onPress={onPress} disabled={disabled}>
+      <View
+        style={{
+          height: 52,
+          width: 52,
+          borderRadius: 26,
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderWidth: 1,
+          borderColor: colors.grey500,
+          backgroundColor: colors.grey50,
+        }}
+      >
         {icon}
-      </Pressable>
-    </View>
+      </View>
+    </Pressable>
   );
 };

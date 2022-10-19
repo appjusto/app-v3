@@ -136,8 +136,8 @@ export const LoginScreen = () => {
                   .catch(console.error);
               }}
             />
-            <RoundIconButton icon={<FacebookIcon />} />
-            <RoundIconButton icon={<AppleIcon />} />
+            <RoundIconButton icon={<FacebookIcon />} onPress={() => null} />
+            <RoundIconButton icon={<AppleIcon />} onPress={() => null} />
           </View>
           <View style={{ width: '20%' }} />
         </View>
