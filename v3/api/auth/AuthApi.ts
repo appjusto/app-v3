@@ -8,7 +8,7 @@ import { getAppVersion } from '../../common/config/version';
 import { getLoginsCollection } from '../../common/core/refs/firestore';
 import { getDeleteAccount } from '../../common/core/refs/functions';
 
-export type AuthMode = 'passwordless' | 'password' | 'phone';
+export type AuthMode = 'passwordless' | 'password' | 'phone' | 'google';
 
 export default class AuthApi {
   private email: string | null = null;

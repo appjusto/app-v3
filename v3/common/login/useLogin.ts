@@ -40,6 +40,8 @@ export const useLogin = (
           await api.getAuth().signInWithEmailAndPassword(email.trim().toLowerCase(), password);
         } else if (authMode === 'phone') {
           // await auth.phone(email, password);
+        } else if (authMode === 'google') {
+          await api.getAuth().signInWithGoogle();
         }
         setLoading(false);
       })();

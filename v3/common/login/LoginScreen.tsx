@@ -130,10 +130,8 @@ export const LoginScreen = () => {
             <RoundIconButton
               icon={<GoogleIcon />}
               onPress={() => {
-                auth
-                  .signInWithGoogle()
-                  .then(() => null)
-                  .catch(console.error);
+                setAuthMode('google');
+                submitHandler();
               }}
             />
             <RoundIconButton icon={<FacebookIcon />} onPress={() => null} />
