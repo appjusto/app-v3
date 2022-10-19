@@ -1,19 +1,12 @@
 import { ConsumerProfile, CourierProfile, UserProfile, WithId } from '@appjusto/types';
-import {
-  doc,
-  GeoPoint,
-  getFirestore,
-  onSnapshot,
-  serverTimestamp,
-  setDoc,
-  Unsubscribe,
-} from 'firebase/firestore';
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { hash } from 'geokit';
 import { Platform } from 'react-native';
 import * as Sentry from 'sentry-expo';
 import { getFlavor } from '../../common/config';
 import { getNativeAndManifestVersion } from '../../common/config/version';
 import { documentAs } from '../../common/core';
+import { getProfile } from '../../common/core/refs/firestore';
 import { getInstallationId } from '../../common/security/getInstallationId';
 import AuthApi from '../auth/AuthApi';
 import { fetchPublicIP } from '../externals/ipify';
@@ -21,65 +14,37 @@ import { fetchPublicIP } from '../externals/ipify';
 export default class ProfileApi {
   constructor(private auth: AuthApi) {}
 
-  private getProfileCollectionName() {
-    if (getFlavor() === 'consumer') return 'consumers';
-    if (getFlavor() === 'courier') return 'couriers';
-    if (getFlavor() === 'business') return 'managers';
-    throw new Error('Flavor inválido');
-  }
-
-  // private helpers
-  private getProfileRef(id: string) {
-    return doc(getFirestore(), this.getProfileCollectionName(), id);
-  }
-  private async createProfile(id: string) {
-    await setDoc(
-      this.getProfileRef(id),
+  // public API
+  async createProfile(id: string) {
+    await getProfile(id).set(
       {
         situation: 'pending',
         email: this.auth.getEmail() ?? null,
         phone: this.auth.getPhoneNumber(true) ?? null,
-        createdOn: serverTimestamp(),
+        createdOn: firestore.FieldValue.serverTimestamp(),
       } as UserProfile,
       { merge: true }
     );
   }
-
-  // firestore
   // observe profile changes
   observeProfile<T extends UserProfile>(
     id: string,
-    resultHandler: (profile: WithId<T>) => void
-  ): Unsubscribe {
-    return onSnapshot(
-      this.getProfileRef(id),
+    resultHandler: (profile: WithId<T> | null) => void
+  ) {
+    return getProfile(id).onSnapshot(
       (snapshot) => {
-        if (!snapshot.exists()) {
-          this.createProfile(id)
-            .then(() => {
-              const unsub = onSnapshot(
-                this.getProfileRef(id),
-                { includeMetadataChanges: true },
-                (snapshotWithMetadata) => {
-                  if (!snapshotWithMetadata.metadata.hasPendingWrites) {
-                    resultHandler(documentAs<T>(snapshotWithMetadata));
-                    unsub();
-                  }
-                }
-              );
-            })
-            .catch((e) => {
-              console.warn(e);
-            });
-        } else resultHandler(documentAs<T>(snapshot));
+        if (!snapshot.exists) {
+          resultHandler(null);
+        } else {
+          resultHandler(documentAs<T>(snapshot));
+        }
       },
       (error) => {
-        console.log('error');
+        console.error(error);
         Sentry.Native.captureException(error);
       }
     );
   }
-
   // update profile
   async updateProfile(
     id: string,
@@ -89,7 +54,6 @@ export default class ProfileApi {
     return new Promise<void>((resolve) => {
       void (async () => {
         try {
-          console.log('Atualizando o profile...');
           const appVersion = getNativeAndManifestVersion();
           const appInstallationId = await getInstallationId();
           const appIp = getFlavor() === 'consumer' ? await fetchPublicIP() : null;
@@ -99,9 +63,10 @@ export default class ProfileApi {
             appInstallationId,
             appIp,
             platform: Platform.OS,
-            updatedOn: serverTimestamp(),
+            updatedOn: firestore.FieldValue.serverTimestamp(),
           };
-          await setDoc(this.getProfileRef(id), update, { merge: true });
+          await getProfile(id).set(update, { merge: true });
+
           resolve();
         } catch (error) {
           if (retry > 0) {
@@ -116,7 +81,7 @@ export default class ProfileApi {
     });
   }
 
-  async updateLocation(id: string, location: GeoPoint) {
+  async updateLocation(id: string, location: FirebaseFirestoreTypes.GeoPoint) {
     const update: Partial<UserProfile> = {
       coordinates: location,
       g: {
@@ -126,9 +91,8 @@ export default class ProfileApi {
           lng: location.longitude,
         }),
       },
-      updatedOn: serverTimestamp(),
+      updatedOn: firestore.FieldValue.serverTimestamp(),
     };
-    console.log(id, update);
     await this.updateProfile(id, update);
   }
 }

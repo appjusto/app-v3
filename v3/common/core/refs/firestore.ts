@@ -1,13 +1,25 @@
-import { collection, doc, getFirestore } from 'firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
+import { getFlavor } from '../../config';
+
+// profile
+export const getProfileCollection = () => {
+  let collection: string | null = null;
+  if (getFlavor() === 'consumer') collection = 'consumers';
+  if (getFlavor() === 'courier') collection = 'couriers';
+  if (getFlavor() === 'business') collection = 'managers';
+  if (!collection) throw new Error('getProfileCollection(): getFlavor() inválido.');
+  return firestore().collection(collection);
+};
+
+export const getProfile = (id: string) => getProfileCollection().doc(id);
 
 // platform
-export const getPlatformCollection = () => collection(getFirestore(), 'platform');
-// platform docs
-export const getPlatformParamsDoc = () => doc(getPlatformCollection(), 'params');
-export const getPlatformAccessDoc = () => doc(getPlatformCollection(), 'access');
-export const getPlatformDataDoc = () => doc(getPlatformCollection(), 'data');
-export const getPlatformLogsDoc = () => doc(getPlatformCollection(), 'logs');
-// platform data sub collections
-export const getBanksCollection = () => collection(getPlatformDataDoc(), 'banks');
-// platform logs sub collections
-export const getLoginsCollection = () => collection(getPlatformLogsDoc(), 'logins');
+export const getPlatformCollection = () => firestore().collection('platform');
+export const getPlatformParamsDoc = () => getPlatformCollection().doc('params');
+export const getPlatformAccessDoc = () => getPlatformCollection().doc('access');
+// platfomrm data
+export const getPlatformDataDoc = () => getPlatformCollection().doc('data');
+export const getBanksCollection = () => getPlatformDataDoc().collection('banks');
+// platform logs
+export const getPlatformLogsDoc = () => getPlatformCollection().doc('logs');
+export const getLoginsCollection = () => getPlatformLogsDoc().collection('logins');
