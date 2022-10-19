@@ -1,7 +1,7 @@
 import { DeleteAccountPayload } from '@appjusto/types';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { getFirebaseWebClientId, getFlavor, getManifestExtra } from '../../common/config';
 import { getDeeplinkDomain, getFallbackDomain } from '../../common/config/domains';
 import { getAppVersion } from '../../common/config/version';
@@ -68,15 +68,22 @@ export default class AuthApi {
   }
 
   async signInWithGoogle() {
-    // Check if your device supports Google Play
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    console.log(googleCredential);
-    return auth().signInWithCredential(googleCredential);
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true }); // for android
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      return auth().signInWithCredential(googleCredential);
+    } catch (error: any) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('user canceled google sign in action');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('operation is in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('play services not available or outdated');
+      } else {
+        console.log(error);
+      }
+    }
   }
 
   // login with email / password
