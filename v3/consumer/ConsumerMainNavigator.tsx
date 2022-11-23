@@ -1,9 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoginNavigator } from '../common/login/LoginNavigator';
 import { ConsumerHomeNavigator } from './home/ConsumerHomeNavigator';
+import { ConsumerMainNavParamList } from './types';
 import { ConsumerWelcomeScreen } from './welcome/ConsumerWelcome';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<ConsumerMainNavParamList>();
 export const ConsumerMainNavigator = () => {
   return (
     <Stack.Navigator>
