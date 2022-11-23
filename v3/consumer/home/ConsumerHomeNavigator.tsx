@@ -1,13 +1,21 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Text } from 'react-native';
 import { colors } from '../../common/styles/colors';
+import { ConsumerMainNavParamList } from '../types';
 import { HistoryNavigator } from './history/HistoryNavigator';
 import { P2PNavigator } from './p2p/P2PNavigator';
 import { ProfileNavigator } from './profile/ProfileNavigator';
 import { RestaurantsNavigator } from './restaurants/RestaurantsNavigator';
+import { ConsumerHomeNavParamList } from './types';
 
-const Tab = createBottomTabNavigator();
+type ScreenNavigationProp = NativeStackNavigationProp<ConsumerMainNavParamList, 'HomeNavigator'>;
+
+const Tab = createBottomTabNavigator<ConsumerHomeNavParamList>();
 export const ConsumerHomeNavigator = () => {
+  // context
+  const navigation = useNavigation<ScreenNavigationProp>();
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
