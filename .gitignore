@@ -16,3 +16,4 @@ web-build/
 # appjusto
 *.env
 google-services*.json
+GoogleService-info*.plist
